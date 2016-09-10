@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Torn Notifications</string>
+
+    <!-- Categories -->
+    <string name="AppCategoryTitle">App</string>
+    <string name="NotificationsCategoryTitle">Notifications</string>
+    <string name="NotificationCategoryTitle">Notification Options</string>
+
+
+    <!-- App Category -->
+    <string name="ApiKeyTitle">ApiKey</string>
+    <string name="ApiKeySummary">Your Torn ApiKey</string>
+
+    <string name="UpdateIntervalTitle">Update Interval</string>
+    <string name="UpdateIntervalSummary">Interval(Seconds) between each Torn API call</string>
+
+    <string name="StartOnBootTitle">Boot</string>
+    <string name="StartOnBootSummary">Start Torn background service on android boot</string>
+
+
+    <!-- Notifications Category -->
+    <string name="EnergyNotificationTitle">Energy Notification</string>
+    <string name="EnergyNotificationSummary">Receieve notification when your energy is full</string>
+
+    <string name="NerveNotificationTitle">Nerve Notification</string>
+    <string name="NerveNotificationSummary">Receieve notification when your nerve is full</string>
+
+    <string name="HappyNotificationTitle">Happy Notification</string>
+    <string name="HappyNotificationSummary">Receieve notification when your happy is full</string>
+
+    <string name="TravelNotificationTitle">Travel Notification</string>
+    <string name="TravelNotificationSummary">Receieve notification when you land at your destination</string>
+
+    <string name="EventsNotificationTitle">Events Notification</string>
+    <string name="EventsNotificationSummary">Receieve notification when your receive a event</string>
+
+
+    <!-- Notification Options Category -->
+    <string name="SoundTitle">Play Sound</string>
+    <string name="SoundSummary">Play a sound when receiving a notification</string>
+    <string name="NotificationSoundTitle">Sound</string>
+    <string name="NotificationSoundSummary">Choose a sound</string>
+
+    <string name="VibrateTitle">Vibrate</string>
+    <string name="VibrateSummary">Vibrate phone when receiving a notification</string>
+
+    <string name="LedTitle">Led</string>
+    <string name="LedSummary">Start blinking phone led when received a notification</string>
+
+
+</resources>

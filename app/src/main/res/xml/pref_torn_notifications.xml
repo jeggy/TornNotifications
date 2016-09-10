@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/prefs_container">
+    <PreferenceCategory
+        android:title="@string/AppCategoryTitle">
+
+        <EditTextPreference
+            android:title="@string/ApiKeyTitle"
+            android:key="ApiKey"
+            android:summary="@string/ApiKeySummary" />
+
+        <EditTextPreference
+            android:defaultValue="10"
+            android:inputType="number"
+            android:key="UpdateInterval"
+            android:summary="@string/UpdateIntervalSummary"
+            android:title="@string/UpdateIntervalTitle" />
+
+        <SwitchPreference
+            android:title="@string/StartOnBootTitle"
+            android:defaultValue="true"
+            android:enabled="false"
+            android:key="StartOnBoot"
+            android:summary="@string/StartOnBootSummary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/NotificationsCategoryTitle">
+        <SwitchPreference
+            android:title="@string/EnergyNotificationTitle"
+            android:defaultValue="true"
+            android:key="EnergyNotification"
+            android:summary="@string/EnergyNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/NerveNotificationTitle"
+            android:defaultValue="true"
+            android:key="NerveNotification"
+            android:summary="@string/NerveNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/HappyNotificationTitle"
+            android:defaultValue="false"
+            android:key="HappyNotification"
+            android:summary="@string/HappyNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/TravelNotificationTitle"
+            android:defaultValue="true"
+            android:key="TravelNotification"
+            android:summary="@string/TravelNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/EventsNotificationTitle"
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="EventsNotification"
+            android:summary="@string/EventsNotificationSummary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/NotificationCategoryTitle">
+
+        <SwitchPreference
+            android:title="@string/SoundTitle"
+            android:defaultValue="true"
+            android:key="Sound"
+            android:summary="@string/SoundSummary" />
+
+        <RingtonePreference
+            android:title="@string/NotificationSoundTitle"
+            android:showDefault="true"
+            android:ringtoneType="notification"
+            android:key="NotificationSound"
+            android:summary="@string/NotificationSoundSummary" />
+
+        <SwitchPreference
+            android:title="@string/VibrateTitle"
+            android:defaultValue="false"
+            android:key="Vibrate"
+            android:summary="@string/VibrateSummary" />
+
+        <SwitchPreference
+            android:title="@string/LedTitle"
+            android:defaultValue="true"
+            android:key="Led"
+            android:summary="@string/LedSummary" />
+
+    </PreferenceCategory>
+
+    <!-- Maybe use ListPreference for Notification design // https://www.youtube.com/watch?v=wRa5Q2Eloa4&list=PL2F07DBCDCC01493A&index=55 -->
+
+</PreferenceScreen>
