@@ -10,7 +10,7 @@ import net.jebster.TornNotifications.tools.Preferences;
 import net.jebster.TornNotifications.model.SaveData;
 import net.jebster.TornNotifications.tools.TornApiService;
 import net.jebster.TornNotifications.model.TornUser;
-import net.jebster.TornNotifications.view.TornNotificationManager;
+import net.jebster.TornNotifications.tools.TornNotificationManager;
 
 /**
  * Created by jeggy on 9/10/16.
@@ -24,7 +24,7 @@ public class TornBackgroundService extends Service{
     private TornUser _lastTornData;
     private SaveData _preferences;
 
-    private net.jebster.TornNotifications.view.TornNotificationManager TornNotificationManager;
+    private net.jebster.TornNotifications.tools.TornNotificationManager TornNotificationManager;
 
     @Override
     public void onCreate()

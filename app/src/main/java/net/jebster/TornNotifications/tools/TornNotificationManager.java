@@ -1,4 +1,4 @@
-package net.jebster.TornNotifications.view;
+package net.jebster.TornNotifications.tools;
 
 import android.app.Notification;
 import android.app.NotificationManager;
