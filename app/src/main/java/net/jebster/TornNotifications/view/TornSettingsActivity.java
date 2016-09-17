@@ -1,4 +1,4 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.view;
 
 
 import android.app.FragmentTransaction;
@@ -15,6 +15,9 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import net.jebster.TornNotifications.R;
+import net.jebster.TornNotifications.service.TornBackgroundService;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -63,7 +66,7 @@ public class TornSettingsActivity extends AppCompatActivity {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     UpdatePreference(findPreference(key), key);
-                    // TODO: Start service.
+                    getActivity().startService(new Intent(getActivity(), TornBackgroundService.class));
                 }
             });
 

@@ -1,4 +1,4 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.model;
 
 import android.net.Uri;
 

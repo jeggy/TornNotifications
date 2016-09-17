@@ -1,8 +1,10 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import net.jebster.TornNotifications.model.SaveData;
 
 /**
  * Created by jeggy on 9/10/16.

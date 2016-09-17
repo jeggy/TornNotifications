@@ -1,8 +1,10 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.tools;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import net.jebster.TornNotifications.model.TornUser;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

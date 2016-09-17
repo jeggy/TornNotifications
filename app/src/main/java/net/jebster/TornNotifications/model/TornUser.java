@@ -1,4 +1,4 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.model;
 
 /**
  * Created by jeggy on 9/10/16.

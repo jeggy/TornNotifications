@@ -1,10 +1,16 @@
-package net.jebster.TornNotifications;
+package net.jebster.TornNotifications.service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import net.jebster.TornNotifications.tools.Preferences;
+import net.jebster.TornNotifications.model.SaveData;
+import net.jebster.TornNotifications.tools.TornApiService;
+import net.jebster.TornNotifications.model.TornUser;
+import net.jebster.TornNotifications.view.TornNotificationManager;
 
 /**
  * Created by jeggy on 9/10/16.
@@ -18,7 +24,7 @@ public class TornBackgroundService extends Service{
     private TornUser _lastTornData;
     private SaveData _preferences;
 
-    private TornNotificationManager TornNotificationManager;
+    private net.jebster.TornNotifications.view.TornNotificationManager TornNotificationManager;
 
     @Override
     public void onCreate()
