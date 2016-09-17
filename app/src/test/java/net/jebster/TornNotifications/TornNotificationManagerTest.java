@@ -31,50 +31,6 @@ public class TornNotificationManagerTest {
     @Before
     public void setup(){
         MockitoAnnotations.initMocks(this);
-        /*
-        sampleSaveData = new SaveData(
-                "ApiKey",   // Key
-                10,         // Update interval
-                true,       // OnBoot
-                true,       // Energy Notification
-                true,       // Nerve Notification
-                true,       // Happy Notification
-                true,       // Travel Notification
-                true,       // Events Notification
-                true,       // Sound
-                "Sound",    // Sound location
-                true,       // Vibrate
-                true        // Led
-        );
-
-        sampleTornUser = new TornUser(
-                4,          // id
-                "username", // Username
-                "ApiKey",   // Apikey
-                145,        // Energy
-                150,        // Maximum energy
-                145,        // Happy
-                150,        // Maximum happy
-                145,        // Nerve
-                150,        // Maximum nerve
-                "Torn",     // Travel destination
-                200         // Travel time left
-        );
-
-        sampleTornUserFull = new TornUser(
-                4,          // id
-                "username", // Username
-                "ApiKey",   // Apikey
-                150,        // Energy
-                150,        // Maximum energy
-                150,        // Happy
-                150,        // Maximum happy
-                150,        // Nerve
-                150,        // Maximum nerve
-                "Torn",     // Travel destination
-                0         // Travel time left
-        );
-        */
     }
 
     @Test
@@ -83,15 +39,17 @@ public class TornNotificationManagerTest {
         when(sampleSaveData.EnergyNotification()).thenReturn(true);
         when(sampleTornUser.getEnergy()).thenReturn(145);
         when(sampleTornUserFull.getEnergy()).thenReturn(150);
+        when(sampleTornUserFull.getMaximumEnergy()).thenReturn(150);
 
         doNothing().when(tnm).EnergyNotification();
         doNothing().when(tnm).HappyNotification();
         doNothing().when(tnm).NerveNotification();
         doNothing().when(tnm).TravelNotification();
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
 
         tnm.notificationsCheck(sampleSaveData, sampleTornUserFull, sampleTornUser);
 
-        verify(tnm).EnergyNotification();
 
+        verify(tnm).EnergyNotification();
     }
 }
