@@ -1,14 +1,11 @@
 package net.jebster.TornNotifications;
 
-import android.support.v4.app.NotificationCompat;
-
 import net.jebster.TornNotifications.model.SaveData;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.tools.TornNotificationManager;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -22,9 +19,9 @@ public class TornNotificationManagerTest {
     @Mock
     SaveData sampleSaveData;
     @Mock
-    TornUser sampleTornUser;
+    TornUser sampleLastUser;
     @Mock
-    TornUser sampleTornUserFull;
+    TornUser sampleNowUser;
     @Mock
     TornNotificationManager tnm;
 
@@ -33,39 +30,154 @@ public class TornNotificationManagerTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    /***************************************************/
+    /*                                                 */
+    /*                    Helpers                      */
+    /*                                                 */
+    /***************************************************/
+
+    private void nothing(TornNotificationManager tnm){
+        doNothing().when(tnm).EnergyNotification();
+        doNothing().when(tnm).HappyNotification();
+        doNothing().when(tnm).NerveNotification();
+        doNothing().when(tnm).TravelNotification();
+    }
+
+    /***************************************************/
+    /*                                                 */
+    /*           Energy Notification Tests             */
+    /*                                                 */
+    /***************************************************/
+
     @Test
     public void notificationsCheck_EnergyNotificationCalledTest(){
+        // Arrange
         when(sampleSaveData.EnergyNotification()).thenReturn(true);
-        when(sampleTornUser.getEnergy()).thenReturn(145);
-        when(sampleTornUserFull.getEnergy()).thenReturn(150);
-        when(sampleTornUserFull.getMaximumEnergy()).thenReturn(150);
+        when(sampleLastUser.getEnergy()).thenReturn(145);
+        when(sampleNowUser.getEnergy()).thenReturn(150);
+        when(sampleNowUser.getMaximumEnergy()).thenReturn(150);
 
-        doNothing().when(tnm).EnergyNotification();
-        doNothing().when(tnm).HappyNotification();
-        doNothing().when(tnm).NerveNotification();
-        doNothing().when(tnm).TravelNotification();
+        nothing(tnm);
         doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
 
-        tnm.notificationsCheck(sampleSaveData, sampleTornUserFull, sampleTornUser);
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
 
-        verify(tnm).EnergyNotification();
+        // Assert
+        verify(tnm, times(1)).EnergyNotification();
     }
 
     @Test
-    public void notificationsCheck_EnergyNotificationNotCalledTest(){
+    public void notificationsCheck_AlreadyFullEnergy_NotCallEnergyNotification(){
+        // Arrange
         when(sampleSaveData.EnergyNotification()).thenReturn(true);
-        when(sampleTornUser.getEnergy()).thenReturn(150);
-        when(sampleTornUserFull.getEnergy()).thenReturn(150);
-        when(sampleTornUserFull.getMaximumEnergy()).thenReturn(150);
+        when(sampleLastUser.getEnergy()).thenReturn(150);
+        when(sampleNowUser.getEnergy()).thenReturn(150);
+        when(sampleNowUser.getMaximumEnergy()).thenReturn(150);
 
-        doNothing().when(tnm).EnergyNotification();
-        doNothing().when(tnm).HappyNotification();
-        doNothing().when(tnm).NerveNotification();
-        doNothing().when(tnm).TravelNotification();
+        nothing(tnm);
         doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
 
-        tnm.notificationsCheck(sampleSaveData, sampleTornUserFull, sampleTornUser);
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
 
+        // Assert
         verify(tnm, never()).EnergyNotification();
     }
+
+    @Test
+    public void notificationsCheck_NotEnoughEnergy_NotCallEnergyNotification(){
+        // Arrange
+        when(sampleSaveData.EnergyNotification()).thenReturn(true);
+        when(sampleLastUser.getEnergy()).thenReturn(120);
+        when(sampleNowUser.getEnergy()).thenReturn(125);
+        when(sampleNowUser.getMaximumEnergy()).thenReturn(150);
+
+        nothing(tnm);
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
+
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
+
+        // Assert
+        verify(tnm, never()).EnergyNotification();
+    }
+
+    @Test
+    public void notificationsCheck_FullEnergyNotificationNotEnabled_NotCallEnergyNotification(){
+        // Arrange
+        when(sampleSaveData.EnergyNotification()).thenReturn(false);
+        when(sampleLastUser.getEnergy()).thenReturn(145);
+        when(sampleNowUser.getEnergy()).thenReturn(150);
+        when(sampleNowUser.getMaximumEnergy()).thenReturn(150);
+
+        nothing(tnm);
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
+
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
+
+        // Assert
+        verify(tnm, never()).EnergyNotification();
+    }
+
+
+
+    /***************************************************/
+    /*                                                 */
+    /*           Travel Notification Tests             */
+    /*                                                 */
+    /***************************************************/
+
+    @Test
+    public void notificationsCheck_Landed_TravelNotificationCalled(){
+        // Arrange
+        when(sampleSaveData.TravelNotification()).thenReturn(true);
+        when(sampleLastUser.getTravelTimeLeft()).thenReturn(20);
+        when(sampleNowUser.getTravelTimeLeft()).thenReturn(0);
+
+        nothing(tnm);
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
+
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
+
+        // Assert
+        verify(tnm, times(1)).TravelNotification();
+    }
+
+    @Test
+    public void notificationsCheck_StillFlying_TravelNotificationNotCalled(){
+        // Arrange
+        when(sampleSaveData.TravelNotification()).thenReturn(true);
+        when(sampleLastUser.getTravelTimeLeft()).thenReturn(500);
+        when(sampleNowUser.getTravelTimeLeft()).thenReturn(350);
+
+        nothing(tnm);
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
+
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
+
+        // Assert
+        verify(tnm, never()).TravelNotification();
+    }
+
+    @Test
+    public void notificationsCheck_NotFlying_TravelNotificationNotCalled(){
+        // Arrange
+        when(sampleSaveData.TravelNotification()).thenReturn(true);
+        when(sampleLastUser.getTravelTimeLeft()).thenReturn(0);
+        when(sampleNowUser.getTravelTimeLeft()).thenReturn(0);
+
+        nothing(tnm);
+        doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
+
+        // Act
+        tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
+
+        // Assert
+        verify(tnm, never()).TravelNotification();
+    }
+
 }

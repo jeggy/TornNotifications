@@ -32,7 +32,6 @@ import net.jebster.TornNotifications.service.TornBackgroundService;
  */
 public class TornSettingsActivity extends AppCompatActivity {
 
-    public static final String PACKAGE_NAME = "net.jebster.tornnotifications";
     private static final String TAG = "TornSettingsActivity";
 
     @Override
