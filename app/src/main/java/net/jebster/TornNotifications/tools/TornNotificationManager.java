@@ -30,35 +30,35 @@ public class TornNotificationManager {
         this.context = context;
     }
 
-    public void NotificationsCheck(SaveData prefs, TornUser current, TornUser last)
+    public void notificationsCheck(SaveData prefs, TornUser current, TornUser last)
     {
         _cp = prefs; _cu = current;
-        if (prefs.energyNotification && current.energy == current.maximumEnergy && current.energy != last.energy)
-            EnergyNotification(current.energy, current.maximumEnergy);
+        if (prefs.EnergyNotification() && current.getEnergy() == current.getMaximumEnergy() && current.getEnergy() != last.getEnergy())
+            EnergyNotification();
 
-        if (prefs.happyNotification && current.happy == current.maximumHappy && current.happy != last.happy)
-            HappyNotification(current.happy, current.maximumHappy);
+        if (prefs.HappyNotification() && current.getHappy() == current.getMaximumHappy() && current.getHappy()!= last.getHappy())
+            HappyNotification();
 
-        if (prefs.nerveNotification && current.nerve == current.maximumNerve && current.nerve != last.nerve)
-            NerveNotification(current.nerve, current.maximumNerve);
+        if (prefs.NerveNotification() && current.getNerve() == current.getMaximumNerve()&& current.getNerve()!= last.getNerve())
+            NerveNotification();
 
-        if (prefs.travelNotification && current.travelTimeLeft == 0 && current.travelTimeLeft != last.travelTimeLeft)
-            TravelNotification(current.travelDestination);
+        if (prefs.TravelNotification() && current.getTravelTimeLeft() == 0 && current.getTravelTimeLeft()!= last.getTravelTimeLeft())
+            TravelNotification();
     }
 
 
-    private NotificationCompat.Builder BasicNotificationBuilder()
+    public NotificationCompat.Builder basicNotificationBuilder()
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentTitle("Torn")
                 .setSmallIcon(R.drawable.notification_template_icon_bg);
 
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
-                .addLine("Energy: " + _cu.energy + "/" + _cu.maximumEnergy)
-                .addLine("Happy: " + _cu.happy + "/" + _cu.maximumHappy)
-                .addLine("Nerve: " + _cu.nerve + "/" + _cu.maximumNerve);
-        if (_cu.travelTimeLeft > 0)
-            style.addLine("Travel time: " + _cu.travelTimeLeft + "s");
+                .addLine("Energy: " + _cu.getEnergy() + "/" + _cu.getMaximumEnergy())
+                .addLine("Happy: " + _cu.getHappy() + "/" + _cu.getMaximumHappy())
+                .addLine("Nerve: " + _cu.getNerve() + "/" + _cu.getMaximumNerve());
+        if (_cu.getTravelTimeLeft() > 0)
+            style.addLine("Travel time: " + _cu.getTravelTimeLeft()+ "s");
 
         PendingIntent actionPendingIntent = PendingIntent.getActivity(context, 1,
                 new Intent(Intent.ACTION_VIEW)
@@ -68,19 +68,19 @@ public class TornNotificationManager {
 
         builder.setStyle(style);
 
-        if (_cp.sound)
+        if (_cp.Sound())
             builder.setSound(_cp.getSound());
 
-        if (_cp.vibrate)
+        if (_cp.Vibrate())
             builder.setVibrate(new long[] { 0, 1000, 500 });
 
-        if (_cp.led) {
+        if (_cp.Led()) {
             builder.setLights(Color.LTGRAY, 2000, 5000);
         }
         return builder;
     }
 
-    public void FinishNotification(NotificationCompat.Builder builder, int id)
+    public void finishNotification(NotificationCompat.Builder builder, int id)
     {
         Notification notification = builder.build();
 
@@ -91,36 +91,36 @@ public class TornNotificationManager {
 
         /* -------------- Notification Types -------------- */
 
-    public void EnergyNotification(int current, int max)
+    public void EnergyNotification()
     {
-        NotificationCompat.Builder builder = BasicNotificationBuilder();
-        builder.setContentText("You have " + current + "/" + max + " Energy!");
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("You have " + _cu.getEnergy() + "/" + _cu.getMaximumEnergy() + " Energy!");
 
-        FinishNotification(builder, 0);
+        finishNotification(builder, 0);
     }
 
-    public void HappyNotification(int current, int max)
+    public void HappyNotification()
     {
-        NotificationCompat.Builder builder = BasicNotificationBuilder();
-        builder.setContentText("You have " + current + "/" + max + " Happy!");
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("You have " + _cu.getHappy() + "/" + _cu.getMaximumHappy()+ " Happy!");
 
-        FinishNotification(builder, 1);
+        finishNotification(builder, 1);
     }
 
-    public void NerveNotification(int current, int max)
+    public void NerveNotification()
     {
-        NotificationCompat.Builder builder = BasicNotificationBuilder();
-        builder.setContentText("You have " + current + "/" + max + " Nerve!");
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("You have " + _cu.getNerve()+ "/" + _cu.getMaximumNerve() + " Nerve!");
 
-        FinishNotification(builder, 2);
+        finishNotification(builder, 2);
     }
 
-    public void TravelNotification(String country)
+    public void TravelNotification()
     {
-        NotificationCompat.Builder builder = BasicNotificationBuilder();
-        builder.setContentText("You landed in " + country);
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("You landed in " + _cu.getTravelDestination());
 
-        FinishNotification(builder, 3);
+        finishNotification(builder, 3);
     }
 
 }

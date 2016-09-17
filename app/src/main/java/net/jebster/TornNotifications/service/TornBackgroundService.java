@@ -61,12 +61,12 @@ public class TornBackgroundService extends Service{
             public void run() {
                 try {
                     while (Running) {
-                        _currentTornData = TornApiService.getUserData(_preferences.apiKey);
-                        if (_currentTornData.errorText != null && _currentTornData.errorText.length() > 0) {
-                            Log.d(TAG, _currentTornData.errorText);
+                        _currentTornData = TornApiService.getUserData(_preferences.getApiKey());
+                        if (_currentTornData.getErrorText() != null && _currentTornData.getErrorText().length() > 0) {
+                            Log.d(TAG, _currentTornData.getErrorText());
                             // TODO: Possible errors: Torn Api Errors, No Internet Connection.
                             // Maybe show in a notification?
-                            Thread.sleep(_preferences.updateSecs * 1000);
+                            Thread.sleep(_preferences.getUpdateSecs()* 1000);
                             continue;
                         }
 
@@ -74,14 +74,14 @@ public class TornBackgroundService extends Service{
                         if (_lastTornData == null) {
                             Log.d(TAG, "First time loaded");
                             _lastTornData = _currentTornData;
-                            Thread.sleep(_preferences.updateSecs * 1000);
+                            Thread.sleep(_preferences.getUpdateSecs() * 1000);
                             continue;
                         }
 
-                        TornNotificationManager.NotificationsCheck(_preferences, _currentTornData, _lastTornData);
+                        TornNotificationManager.notificationsCheck(_preferences, _currentTornData, _lastTornData);
 
                         _lastTornData = _currentTornData;
-                        Thread.sleep(_preferences.updateSecs * 1000);
+                        Thread.sleep(_preferences.getUpdateSecs() * 1000);
                     }
                 }
                 catch (InterruptedException e){
