@@ -3,6 +3,7 @@ package net.jebster.TornNotifications.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.preference.Preference;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -18,7 +19,7 @@ import net.jebster.TornNotifications.tools.TornNotificationManager;
 public class TornBackgroundService extends Service{
     public static final String TAG = "TornBackgroundService";
 
-    public boolean Running = true;
+    public boolean Running;
 
     private TornUser _currentTornData;
     private TornUser _lastTornData;
@@ -38,6 +39,9 @@ public class TornBackgroundService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
         boolean startLoop = _preferences == null;
+
+        int tmpUpdateSecs = _preferences == null ? -1 : _preferences.getUpdateSecs();
+
         LoadPreferences();
 
         if (startLoop)
@@ -56,6 +60,7 @@ public class TornBackgroundService extends Service{
 
     public void StartChecking()
     {
+        Running = true;
         new Thread(){
             @Override
             public void run() {
@@ -85,7 +90,8 @@ public class TornBackgroundService extends Service{
                     }
                 }
                 catch (InterruptedException e){
-                    System.out.println(e.getMessage());
+                    Log.d(TAG, "InterruptedException in StartChecking Thread: " + e.getMessage());
+                    Running = false;
                 }
             }
         }.start();
