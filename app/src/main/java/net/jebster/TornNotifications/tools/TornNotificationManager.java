@@ -123,4 +123,12 @@ public class TornNotificationManager {
         finishNotification(builder, 3);
     }
 
+    public void showBasicNotification(String s) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this.context)
+                        .setSmallIcon(R.drawable.notification_template_icon_bg)
+                        .setContentTitle("Torn Notifications")
+                        .setContentText(s);
+        finishNotification(mBuilder, 1);
+    }
 }
