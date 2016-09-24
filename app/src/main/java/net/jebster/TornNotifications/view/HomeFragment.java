@@ -61,30 +61,30 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
         if(energyBar != null && energyBarText != null && happyBar != null && happyBarText != null &&
                 nerveBar != null && nerveBarText != null && lifeBar != null && lifeBarText != null) {
 
-            energyBar.setMax(user.getMaximumEnergy());
-            energyBar.setProgress(user.getEnergy());
+            energyBar.setMax(user.getEnergy().getMaximum());
+            energyBar.setProgress(user.getEnergy().getCurrent());
             // energyBar.setSecondaryProgress(user.); // TODO: getEnergy() + energy.increment
-            energyBarText.setText(user.getEnergy() + "/" + user.getMaximumEnergy());
+            energyBarText.setText(user.getEnergy().getCurrent() + "/" + user.getEnergy().getMaximum());
 
-            happyBar.setMax(user.getMaximumHappy());
-            happyBar.setProgress(user.getHappy());
-            happyBarText.setText(user.getHappy() + "/" + user.getMaximumHappy());
+            happyBar.setMax(user.getHappy().getMaximum());
+            happyBar.setProgress(user.getHappy().getCurrent());
+            happyBarText.setText(user.getHappy().getCurrent() + "/" + user.getHappy().getMaximum());
 
-            nerveBar.setMax(user.getMaximumNerve());
-            nerveBar.setProgress(user.getNerve());
-            nerveBarText.setText(user.getNerve() + "/" + user.getMaximumNerve());
+            nerveBar.setMax(user.getNerve().getMaximum());
+            nerveBar.setProgress(user.getNerve().getCurrent());
+            nerveBarText.setText(user.getNerve().getCurrent() + "/" + user.getNerve().getMaximum());
 
-            lifeBar.setMax(user.getMaximumLife());
-            lifeBar.setProgress(user.getLife());
-            lifeBarText.setText(user.getLife()+"/"+user.getMaximumLife());
+            lifeBar.setMax(user.getLife().getMaximum());
+            lifeBar.setProgress(user.getLife().getCurrent());
+            lifeBarText.setText(user.getLife().getCurrent()+"/"+user.getLife().getMaximum());
 
 
-            if(user.getTravelTimeLeft() > 0) {
+            if(user.getTravel().getTime_left() > 0) {
                 travelBar.setVisibility(View.VISIBLE);
                 travelBarText.setVisibility(View.VISIBLE);
-                travelBar.setMax(user.getTravelTime());
-                travelBar.setProgress(user.getTravelTimeLeft());
-                travelBarText.setText(user.getTravelDestination() + ": " +user.getTravelTimeLeft() + "/" + user.getTravelTime() +"s");
+                travelBar.setMax((int) user.getTravel().getTravelTime());
+                travelBar.setProgress((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left()));
+                travelBarText.setText(user.getTravel().getDestination() + ": " +user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
             }else{
                 travelBar.setVisibility(View.INVISIBLE);
                 travelBarText.setVisibility(View.INVISIBLE);

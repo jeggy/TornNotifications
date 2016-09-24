@@ -14,6 +14,8 @@ import net.jebster.TornNotifications.tools.TornApiService;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.tools.TornNotificationManager;
 
+import java.util.ArrayList;
+
 /**
  * Created by jeggy on 9/10/16.
  */
@@ -67,7 +69,7 @@ public class TornBackgroundService extends Service{
             public void run() {
                 try {
                     while (Running) {
-                        _currentTornData = TornApiService.getUserData(_preferences.getApiKey());
+                        _currentTornData = TornApiService.getUserData(_preferences.getApiKey(), getRequiredFields());
                         tornDataToActivity(_currentTornData);
                         if (_currentTornData.getErrorText() != null && _currentTornData.getErrorText().length() > 0) {
                             Log.d(TAG, _currentTornData.getErrorText());
@@ -97,6 +99,20 @@ public class TornBackgroundService extends Service{
                 }
             }
         }.start();
+    }
+
+    private String[] getRequiredFields() {
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(TornApiService.BASIC);
+
+        if(_preferences.HappyNotification() || _preferences.EnergyNotification() || _preferences.NerveNotification())
+            list.add(TornApiService.BARS);
+
+        if(_preferences.TravelNotification())
+            list.add(TornApiService.TRAVEL);
+
+        return list.toArray(new String[]{});
     }
 
     private void tornDataToActivity(TornUser data) {

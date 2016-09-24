@@ -46,6 +46,8 @@
 
     <string name="LedTitle">Led</string>
     <string name="LedSummary">Start blinking phone led when received a notification</string>
+
+
     <string name="title_activity_navigation">Navigation</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

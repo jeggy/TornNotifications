@@ -20,8 +20,13 @@ public class TornApiService {
     public static final String BARS = "bars";
     public static final String TRAVEL = "travel";
 
-    public static TornUser getUserData(String key){
-        JsonObject obj = apiRequest(key, "basic,bars,travel");
+    public static TornUser getUserData(String key, String[] f){
+        String fields = "";
+        for (String field : f) {
+            fields += field+",";
+        }
+        fields = fields.substring(0, fields.length()-1);
+        JsonObject obj = apiRequest(key, fields); //"basic,bars,travel");
 
         TornUser tu;
 
@@ -34,18 +39,44 @@ public class TornApiService {
                     get(obj, "player_id").getAsInt(),
                     get(obj, "name").getAsString(),
                     key,
-                    get(obj, "energy","current").getAsInt(),
-                    get(obj, "energy","maximum").getAsInt(),
-                    get(obj, "happy","current").getAsInt(),
-                    get(obj, "happy","maximum").getAsInt(),
-                    get(obj, "nerve","current").getAsInt(),
-                    get(obj, "nerve","maximum").getAsInt(),
-                    get(obj, "life","current").getAsInt(),
-                    get(obj, "life","maximum").getAsInt(),
-
-                    get(obj, "travel", "destination").getAsString(),
-                    get(obj, "travel", "time_left").getAsInt(),
-                    get(obj, "travel", "timestamp").getAsInt() - get(obj, "travel", "departed").getAsInt()
+                    new TornUser.Bar(
+                            get(obj, "energy","current").getAsInt(),
+                            get(obj, "energy","maximum").getAsInt(),
+                            get(obj, "energy","increment").getAsInt(),
+                            get(obj, "energy","interval").getAsInt(),
+                            get(obj, "energy","ticktime").getAsInt(),
+                            get(obj, "energy","fulltime").getAsInt()
+                    ),
+                    new TornUser.Bar(
+                            get(obj, "happy","current").getAsInt(),
+                            get(obj, "happy","maximum").getAsInt(),
+                            get(obj, "happy","increment").getAsInt(),
+                            get(obj, "happy","interval").getAsInt(),
+                            get(obj, "happy","ticktime").getAsInt(),
+                            get(obj, "happy","fulltime").getAsInt()
+                    ),
+                    new TornUser.Bar(
+                            get(obj, "nerve","current").getAsInt(),
+                            get(obj, "nerve","maximum").getAsInt(),
+                            get(obj, "nerve","increment").getAsInt(),
+                            get(obj, "nerve","interval").getAsInt(),
+                            get(obj, "nerve","ticktime").getAsInt(),
+                            get(obj, "nerve","fulltime").getAsInt()
+                    ),
+                    new TornUser.Bar(
+                            get(obj, "life","current").getAsInt(),
+                            get(obj, "life","maximum").getAsInt(),
+                            get(obj, "life","increment").getAsInt(),
+                            get(obj, "life","interval").getAsInt(),
+                            get(obj, "life","ticktime").getAsInt(),
+                            get(obj, "life","fulltime").getAsInt()
+                    ),
+                    new TornUser.Travel(
+                            get(obj, "travel", "destination").getAsString(),
+                            get(obj, "travel", "timestamp").getAsLong(),
+                            get(obj, "travel", "departed").getAsLong(),
+                            get(obj, "travel", "time_left").getAsLong()
+                    )
             );
 //            (obj.get("travel").getAsJsonObject().get("timestamp").getAsInt())-(obj.get("travel").getAsJsonObject().get("departed").getAsInt())
         } else {

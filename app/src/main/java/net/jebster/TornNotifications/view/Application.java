@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.R;
@@ -30,6 +32,7 @@ public class Application extends AppCompatActivity
     private static final String TAG = "Application";
 
     private TornInfoUpdateInterface tf;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class Application extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         setDisplay(R.id.nav_home);
@@ -124,6 +127,10 @@ public class Application extends AppCompatActivity
     }
 
     public void updateViews(TornUser user){
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.nav_username);
+        nav_user.setText(user.getUsername());
+
         if(tf != null) tf.tornUser(user);
     }
 
