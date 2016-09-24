@@ -14,6 +14,8 @@ import net.jebster.TornNotifications.model.TornGlobals;
 import net.jebster.TornNotifications.model.FlightInfo;
 import net.jebster.TornNotifications.model.TornUser;
 
+import java.util.Objects;
+
 /**
  * Created by jeggy on 9/24/16.
  */
@@ -59,36 +61,49 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
     @Override
     public void tornUser(TornUser user) {
         if(energyBar != null && energyBarText != null && happyBar != null && happyBarText != null &&
-                nerveBar != null && nerveBarText != null && lifeBar != null && lifeBarText != null) {
+                nerveBar != null && nerveBarText != null && lifeBar != null && lifeBarText != null &&
+                user.getErrorText() == null) {
 
-            energyBar.setMax(user.getEnergy().getMaximum());
-            energyBar.setProgress(user.getEnergy().getCurrent());
+            set(energyBar, user.getEnergy().getMaximum(), user.getEnergy().getCurrent());
             // energyBar.setSecondaryProgress(user.); // TODO: getEnergy() + energy.increment
             energyBarText.setText(user.getEnergy().getCurrent() + "/" + user.getEnergy().getMaximum());
 
-            happyBar.setMax(user.getHappy().getMaximum());
-            happyBar.setProgress(user.getHappy().getCurrent());
+            set(happyBar, user.getHappy().getMaximum(), user.getHappy().getCurrent());
             happyBarText.setText(user.getHappy().getCurrent() + "/" + user.getHappy().getMaximum());
 
-            nerveBar.setMax(user.getNerve().getMaximum());
-            nerveBar.setProgress(user.getNerve().getCurrent());
+            set(nerveBar, user.getNerve().getMaximum(), user.getNerve().getCurrent());
             nerveBarText.setText(user.getNerve().getCurrent() + "/" + user.getNerve().getMaximum());
 
-            lifeBar.setMax(user.getLife().getMaximum());
-            lifeBar.setProgress(user.getLife().getCurrent());
+            set(lifeBar, user.getLife().getMaximum(), user.getLife().getCurrent());
             lifeBarText.setText(user.getLife().getCurrent()+"/"+user.getLife().getMaximum());
 
 
             if(user.getTravel().getTime_left() > 0) {
                 travelBar.setVisibility(View.VISIBLE);
                 travelBarText.setVisibility(View.VISIBLE);
-                travelBar.setMax((int) user.getTravel().getTravelTime());
-                travelBar.setProgress((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left()));
+                set(travelBar, ((int) user.getTravel().getTravelTime()), ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())));
                 travelBarText.setText(user.getTravel().getDestination() + ": " +user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
             }else{
                 travelBar.setVisibility(View.INVISIBLE);
                 travelBarText.setVisibility(View.INVISIBLE);
             }
+        }else{
+            set(energyBar, 0, 0);
+            set(happyBar, 0, 0);
+            set(nerveBar, 0, 0);
+            set(lifeBar, 0, 0);
+            set(travelBar, 0, 0);
+
+            energyBarText.setText("0/0");
+            happyBarText.setText("0/0");
+            nerveBarText.setText("0/0");
+            lifeBarText.setText("0/0");
+            travelBarText.setText("0/0s");
         }
+    }
+
+    private void set(ProgressBar bar, int max, int progress){
+        bar.setMax(max);
+        bar.setProgress(progress);
     }
 }
