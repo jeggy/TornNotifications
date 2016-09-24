@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
                 user.getErrorText() == null) {
 
             set(energyBar, user.getEnergy().getMaximum(), user.getEnergy().getCurrent());
-            // energyBar.setSecondaryProgress(user.); // TODO: getEnergy() + energy.increment
             energyBarText.setText(user.getEnergy().getCurrent() + "/" + user.getEnergy().getMaximum());
 
             set(happyBar, user.getHappy().getMaximum(), user.getHappy().getCurrent());
@@ -105,5 +104,6 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
     private void set(ProgressBar bar, int max, int progress){
         bar.setMax(max);
         bar.setProgress(progress);
+        // bar.setSecondaryProgress(); // TODO: getEnergy() + energy.increment
     }
 }
