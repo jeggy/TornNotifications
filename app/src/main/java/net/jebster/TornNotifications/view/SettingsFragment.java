@@ -12,13 +12,14 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 
 import net.jebster.TornNotifications.R;
+import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.service.TornBackgroundService;
 
 /**
  * Created by jeggy on 9/22/16.
  */
 
-public class SettingsFragment extends PreferenceFragment
+public class SettingsFragment extends PreferenceFragment implements TornInfoUpdateInterface
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -75,5 +76,10 @@ public class SettingsFragment extends PreferenceFragment
             Uri testa = Uri.parse(sharedPrefs.getString("NotificationSound", "default ringtone"));
             preference.setSummary(text + " : " + testa);
         }
+    }
+
+    @Override
+    public void tornUser(TornUser user) {
+
     }
 }

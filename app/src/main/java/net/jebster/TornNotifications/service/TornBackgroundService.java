@@ -3,10 +3,11 @@ package net.jebster.TornNotifications.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.preference.Preference;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.tools.Preferences;
 import net.jebster.TornNotifications.model.SaveData;
 import net.jebster.TornNotifications.tools.TornApiService;
@@ -67,6 +68,7 @@ public class TornBackgroundService extends Service{
                 try {
                     while (Running) {
                         _currentTornData = TornApiService.getUserData(_preferences.getApiKey());
+                        tornDataToActivity(_currentTornData);
                         if (_currentTornData.getErrorText() != null && _currentTornData.getErrorText().length() > 0) {
                             Log.d(TAG, _currentTornData.getErrorText());
                             // TODO: Possible errors: Torn Api Errors, No Internet Connection.
@@ -95,6 +97,13 @@ public class TornBackgroundService extends Service{
                 }
             }
         }.start();
+    }
+
+    private void tornDataToActivity(TornUser data) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(
+                new Intent(Globals.INTENT_FILTER_TORN_USER)
+                .putExtra(Globals.EXTRA_TORN_USER, data)
+        );
     }
 
     @Nullable

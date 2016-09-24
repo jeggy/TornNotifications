@@ -16,6 +16,10 @@ import java.net.URL;
  */
 public class TornApiService {
 
+    public static final String BASIC = "basic";
+    public static final String BARS = "bars";
+    public static final String TRAVEL = "travel";
+
     public static TornUser getUserData(String key){
         JsonObject obj = apiRequest(key, "basic,bars,travel");
 
@@ -27,20 +31,23 @@ public class TornApiService {
             );
         } else if(obj != null) {
             tu = new TornUser(
-                    obj.get("player_id").getAsInt(),
-                    obj.get("name").getAsString(),
+                    get(obj, "player_id").getAsInt(),
+                    get(obj, "name").getAsString(),
                     key,
+                    get(obj, "energy","current").getAsInt(),
+                    get(obj, "energy","maximum").getAsInt(),
+                    get(obj, "happy","current").getAsInt(),
+                    get(obj, "happy","maximum").getAsInt(),
+                    get(obj, "nerve","current").getAsInt(),
+                    get(obj, "nerve","maximum").getAsInt(),
+                    get(obj, "life","current").getAsInt(),
+                    get(obj, "life","maximum").getAsInt(),
 
-                    obj.get("energy").getAsJsonObject().get("current").getAsInt(),
-                    obj.get("energy").getAsJsonObject().get("maximum").getAsInt(),
-                    obj.get("happy").getAsJsonObject().get("current").getAsInt(),
-                    obj.get("happy").getAsJsonObject().get("maximum").getAsInt(),
-                    obj.get("nerve").getAsJsonObject().get("current").getAsInt(),
-                    obj.get("nerve").getAsJsonObject().get("maximum").getAsInt(),
-
-                    obj.get("travel").getAsJsonObject().get("destination").getAsString(),
-                    obj.get("travel").getAsJsonObject().get("time_left").getAsInt()
+                    get(obj, "travel", "destination").getAsString(),
+                    get(obj, "travel", "time_left").getAsInt(),
+                    get(obj, "travel", "timestamp").getAsInt() - get(obj, "travel", "departed").getAsInt()
             );
+//            (obj.get("travel").getAsJsonObject().get("timestamp").getAsInt())-(obj.get("travel").getAsJsonObject().get("departed").getAsInt())
         } else {
             tu = new TornUser("Damn error");
         }
@@ -48,6 +55,13 @@ public class TornApiService {
         return tu;
     }
 
+    private static JsonElement get(JsonObject obj, String... g){
+        for (int i = 0; i < g.length - 1; i++) {
+            obj = obj.get(g[i]).getAsJsonObject();
+        }
+
+        return obj.get(g[g.length-1]);
+    }
 
     private static JsonObject apiRequest(String key, String selections){
         try {

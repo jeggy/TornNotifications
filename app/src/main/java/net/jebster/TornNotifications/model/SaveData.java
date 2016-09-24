@@ -41,12 +41,6 @@ public class SaveData {
         return Uri.parse(_sound);
     }
 
-
-
-
-    //
-
-
     public String getApiKey() {
         return apiKey;
     }

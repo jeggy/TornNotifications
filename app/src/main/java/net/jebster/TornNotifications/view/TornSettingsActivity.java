@@ -32,6 +32,7 @@ import net.jebster.TornNotifications.service.TornBackgroundService;
  */
 public class TornSettingsActivity extends AppCompatActivity {
 
+    /* Remove this class
     private static final String TAG = "TornSettingsActivity";
 
     @Override
@@ -52,5 +53,6 @@ public class TornSettingsActivity extends AppCompatActivity {
         startService(new Intent(this, TornBackgroundService.class));
     }
 
+    */
 
 }

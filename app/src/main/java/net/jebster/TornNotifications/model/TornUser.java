@@ -1,9 +1,11 @@
 package net.jebster.TornNotifications.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jeggy on 9/10/16.
  */
-public class TornUser {
+public class TornUser implements Serializable {
 
     private int id;
     private String username;
@@ -16,14 +18,17 @@ public class TornUser {
     private int maximumHappy;
     private int nerve;
     private int maximumNerve;
+    private int life;
+    private int maximumLife;
 
     private String travelDestination;
     private int travelTimeLeft;
+    private int travelTime;
 
     // Error
     private String errorText;
 
-    public TornUser(int id, String username, String apiKey, int energy, int maximumEnergy, int happy, int maximumHappy, int nerve, int maximumNerve, String travelDestination, int travelTimeLeft) {
+    public TornUser(int id, String username, String apiKey, int energy, int maximumEnergy, int happy, int maximumHappy, int nerve, int maximumNerve, int life, int maximumLife, String travelDestination, int travelTimeLeft, int travelTime) {
         this.id = id;
         this.username = username;
         this.apiKey = apiKey;
@@ -33,8 +38,11 @@ public class TornUser {
         this.maximumHappy = maximumHappy;
         this.nerve = nerve;
         this.maximumNerve = maximumNerve;
+        this.life = life;
+        this.maximumLife = maximumLife;
         this.travelDestination = travelDestination;
         this.travelTimeLeft = travelTimeLeft;
+        this.travelTime = travelTime;
     }
 
     public TornUser(String errorText) {
@@ -113,6 +121,22 @@ public class TornUser {
         this.maximumNerve = maximumNerve;
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getMaximumLife() {
+        return maximumLife;
+    }
+
+    public void setMaximumLife(int maximumLife) {
+        this.maximumLife = maximumLife;
+    }
+
     public String getTravelDestination() {
         return travelDestination;
     }
@@ -127,6 +151,14 @@ public class TornUser {
 
     public void setTravelTimeLeft(int travelTimeLeft) {
         this.travelTimeLeft = travelTimeLeft;
+    }
+
+    public int getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(int travelTime) {
+        this.travelTime = travelTime;
     }
 
     public String getErrorText() {
