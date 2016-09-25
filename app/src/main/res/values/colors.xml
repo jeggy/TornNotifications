@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Bars -->
+    <color name="colorEnergyPrimary">#1aff00</color>
+    <color name="colorEnergySecondary">#13b900</color>
+    <color name="colorHappyPrimary">#fffb00</color>
+    <color name="colorHappySecondary">#fcfcbd</color>
+    <color name="colorNervePrimary">#ff0900</color>
+    <color name="colorNerveSecondary">#ff9582</color>
+    <color name="colorLifePrimary">#0011ff</color>
+    <color name="colorLifeSecondary">#82a5ff</color>
+    <color name="colorTravelPrimary">#d500ff</color>
+    <color name="colorTravelSecondary">#e79aff</color>
+
 </resources>

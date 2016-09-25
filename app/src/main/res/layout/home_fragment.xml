@@ -14,10 +14,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="75dip"
@@ -39,6 +41,19 @@
                     android:progress="75"
                     android:indeterminate="false" />
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:layout_alignBottom="@+id/energy_bar"
+                    android:progressDrawable="@drawable/bar_time_energy"
+                    android:indeterminateOnly="false"
+                    android:id="@+id/energy_bar_time"
+
+                    android:visibility="visible"
+                    android:max="100"
+                    android:progress="25"
+                    android:indeterminate="false" />
+
                 <TextView
                     android:id="@+id/energy_bar_text"
                     android:text="75/100"
@@ -53,7 +68,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
             <TextView
                 android:text="Happy:"
                 android:layout_height="match_parent"
@@ -73,6 +89,19 @@
                     android:progress="900"
                     android:indeterminate="false" />
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:layout_alignBottom="@+id/happy_bar"
+                    android:progressDrawable="@drawable/bar_time_happy"
+                    android:indeterminateOnly="false"
+                    android:id="@+id/happy_bar_time"
+
+                    android:visibility="visible"
+                    android:max="100"
+                    android:progress="25"
+                    android:indeterminate="false" />
+
                 <TextView
                     android:id="@+id/happy_bar_text"
                     android:text="900/1250"
@@ -87,7 +116,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
             <TextView
                 android:text="Nerve:"
                 android:layout_height="match_parent"
@@ -107,6 +137,19 @@
                     android:progress="5"
                     android:indeterminate="false" />
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:layout_alignBottom="@+id/nerve_bar"
+                    android:progressDrawable="@drawable/bar_time_nerve"
+                    android:indeterminateOnly="false"
+                    android:id="@+id/nerve_bar_time"
+
+                    android:visibility="visible"
+                    android:max="100"
+                    android:progress="25"
+                    android:indeterminate="false" />
+
                 <TextView
                     android:id="@+id/nerve_bar_text"
                     android:text="5/20"
@@ -121,7 +164,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
             <TextView
                 android:text="Life:"
                 android:layout_height="match_parent"
@@ -140,6 +184,20 @@
                     android:max="2155"
                     android:progress="2155"
                     android:indeterminate="false" />
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:layout_alignBottom="@+id/life_bar"
+                    android:progressDrawable="@drawable/bar_time_life"
+                    android:indeterminateOnly="false"
+                    android:id="@+id/life_bar_time"
+
+                    android:visibility="visible"
+                    android:max="100"
+                    android:progress="25"
+                    android:indeterminate="false" />
+
 
                 <TextView
                     android:id="@+id/life_bar_text"
@@ -172,7 +230,20 @@
                     android:id="@+id/travel_bar"
                     android:visibility="visible"
                     android:max="500"
-                    android:progress="10"
+                    android:progress="50"
+                    android:indeterminate="false" />
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"
+                    android:layout_alignBottom="@+id/travel_bar"
+                    android:progressDrawable="@drawable/bar_time_travel"
+                    android:indeterminateOnly="false"
+                    android:id="@+id/travel_bar_time"
+
+                    android:visibility="visible"
+                    android:max="100"
+                    android:progress="25"
                     android:indeterminate="false" />
 
                 <TextView

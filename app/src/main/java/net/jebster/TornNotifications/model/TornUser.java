@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class TornUser implements Serializable {
 
+    private static long serverTime;
+
     private int id;
     private String username;
 
@@ -21,7 +23,7 @@ public class TornUser implements Serializable {
     // Error
     private String errorText;
 
-    public TornUser(int id, String username, String apiKey, Bar energy, Bar happy, Bar nerve, Bar life, Travel travel) {
+    public TornUser(int id, String username, String apiKey, Bar energy, Bar happy, Bar nerve, Bar life, Travel travel, long serverTime) {
         this.id = id;
         this.username = username;
         this.apiKey = apiKey;
@@ -32,6 +34,8 @@ public class TornUser implements Serializable {
         this.life = life;
 
         this.travel = travel;
+
+        this.serverTime = serverTime;
     }
 
     public TornUser(String errorText) {
@@ -108,6 +112,14 @@ public class TornUser implements Serializable {
 
     public void setErrorText(String errorText) {
         this.errorText = errorText;
+    }
+
+    public long getServerTime() {
+        return serverTime;
+    }
+
+    public void setServerTime(long serverTime) {
+        TornUser.serverTime = serverTime;
     }
 
     public static class Bar{

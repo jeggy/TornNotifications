@@ -76,11 +76,11 @@ public class TornApiService {
                             get(obj, "travel", "timestamp").getAsLong(),
                             get(obj, "travel", "departed").getAsLong(),
                             get(obj, "travel", "time_left").getAsLong()
-                    )
+                    ),
+                    get(obj, "server_time").getAsLong()
             );
-//            (obj.get("travel").getAsJsonObject().get("timestamp").getAsInt())-(obj.get("travel").getAsJsonObject().get("departed").getAsInt())
         } else {
-            tu = new TornUser("Damn error");
+            tu = new TornUser("Some error");
         }
 
         return tu;
