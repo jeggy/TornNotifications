@@ -61,7 +61,7 @@ public class SettingsFragment extends PreferenceFragment implements TornInfoUpda
     private void UpdatePreference(Preference preference, String key)
     {
         if (preference == null) return;
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
 
         String text = getResources().getString(getResources().getIdentifier(key+"Summary", "string" , getActivity().getPackageName()));
         if (preference instanceof EditTextPreference)
