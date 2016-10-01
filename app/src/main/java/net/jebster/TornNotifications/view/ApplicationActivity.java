@@ -101,6 +101,7 @@ public class ApplicationActivity extends AppCompatActivity
                 title = "Home";
                 break;
             case R.id.nav_notificcations:
+            case R.id.action_settings:
                 fragment = new SettingsFragment();
                 title = "Settings";
                 break;
