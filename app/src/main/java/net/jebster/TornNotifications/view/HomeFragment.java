@@ -1,8 +1,10 @@
 package net.jebster.TornNotifications.view;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.jebster.TornNotifications.R;
-import net.jebster.TornNotifications.model.TornGlobals;
-import net.jebster.TornNotifications.model.FlightInfo;
+import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.model.TornUser;
-
-import java.util.Objects;
-import java.util.concurrent.ThreadFactory;
+import net.jebster.TornNotifications.tools.Observer;
 
 /**
  * Created by jeggy on 9/24/16.
  */
 
-public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
+public class HomeFragment extends Fragment implements Observer {
 
     private final String TAG = "HomeFragment";
 
@@ -34,13 +33,13 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
     private ProgressBar happyBarTime;
     private ProgressBar nerveBarTime;
     private ProgressBar lifeBarTime;
-    private ProgressBar travelBarTime;
     private TextView energyBarText;
     private TextView happyBarText;
     private TextView nerveBarText;
     private TextView lifeBarText;
     private TextView travelBarText;
 
+    private TornUser user;
 
     @Nullable
     @Override
@@ -58,7 +57,6 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
             happyBarTime = (ProgressBar) view.findViewById(R.id.happy_bar_time);
             nerveBarTime = (ProgressBar) view.findViewById(R.id.nerve_bar_time);
             lifeBarTime = (ProgressBar) view.findViewById(R.id.life_bar_time);
-            travelBarTime = (ProgressBar) view.findViewById(R.id.travel_bar_time);
 
             energyBarText = (TextView) view.findViewById(R.id.energy_bar_text);
             happyBarText = (TextView) view.findViewById(R.id.happy_bar_text);
@@ -66,61 +64,105 @@ public class HomeFragment extends Fragment implements TornInfoUpdateInterface{
             lifeBarText = (TextView) view.findViewById(R.id.life_bar_text);
             travelBarText = (TextView) view.findViewById(R.id.travel_bar_text);
         }
-
+        Globals.User().addObserver(TAG, this);
+        updateView();
         return view;
     }
 
-    private void show(ProgressBar pb, ProgressBar pbt, TextView tv, TornUser.Bar bar){
-        set(pb, bar.getMaximum(), bar.getCurrent(), bar.getCurrent()+bar.getIncrement());
-        set(pbt, bar.getInterval(), bar.getInterval()-bar.getTicktime(), 0);
-        tv.setText(bar.getCurrent() + "/" + bar.getMaximum());
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        updateView();
     }
 
-    @Override
-    public void tornUser(TornUser user) {
-        if(energyBar != null && energyBarText != null && happyBar != null && happyBarText != null &&
-                nerveBar != null && nerveBarText != null && lifeBar != null && lifeBarText != null &&
-                user.getErrorText() == null) {
-
+    public void updateView(){
+        user = Globals.User();
+        if(user != null && user.getErrorText() == null){
             show(energyBar, energyBarTime, energyBarText, user.getEnergy());
             show(happyBar, happyBarTime, happyBarText, user.getHappy());
             show(nerveBar, nerveBarTime, nerveBarText, user.getNerve());
             show(lifeBar, lifeBarTime, lifeBarText, user.getLife());
+            showTravel();
+        } else {
+            reset();
+        }
+    }
 
-            if(user.getTravel().getTime_left() > 0) {
-                travelBar.setVisibility(View.VISIBLE);
-                travelBarTime.setVisibility(View.VISIBLE);
-                travelBarText.setVisibility(View.VISIBLE);
-                set(travelBar,
-                        ((int) user.getTravel().getTravelTime()),
-                        ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())),
-                        0);
-                travelBarText.setText(user.getTravel().getDestination() + ": " +user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
-            }else{
-                travelBar.setVisibility(View.INVISIBLE);
-                travelBarTime.setVisibility(View.INVISIBLE);
-                travelBarText.setVisibility(View.INVISIBLE);
-            }
+    private void show(ProgressBar pb, ProgressBar pbt, TextView tv, TornUser.Bar bar){
+        set(pb, bar.getMaximum(), bar.getCurrent(), bar.getCurrent()+bar.getIncrement());
+        set(pbt, bar.getInterval(), bar.getInterval()-bar.getTicktime());
+        tv.setText(bar.getCurrent() + "/" + bar.getMaximum());
+    }
+
+    private void reset() {
+        set(energyBar, 0, 0);
+        set(happyBar, 0, 0);
+        set(nerveBar, 0, 0);
+        set(lifeBar, 0, 0);
+        set(travelBar, 0, 0);
+
+        energyBarText.setText("0/0");
+        happyBarText.setText("0/0");
+        nerveBarText.setText("0/0");
+        lifeBarText.setText("0/0");
+        travelBarText.setText("0/0s");
+    }
+
+
+
+    private void showTravel() {
+        if(user.getTravel().getTime_left() > 0) {
+            travelBar.setVisibility(View.VISIBLE);
+            travelBarText.setVisibility(View.VISIBLE);
+            set(travelBar,
+                    ((int) user.getTravel().getTravelTime()),
+                    ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())));
+            travelBarText.setText(user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
         }else{
-            set(energyBar, 0, 0, 0);
-            set(happyBar, 0, 0, 0);
-            set(nerveBar, 0, 0, 0);
-            set(lifeBar, 0, 0, 0);
-            set(travelBar, 0, 0, 0);
-
-            energyBarText.setText("0/0");
-            happyBarText.setText("0/0");
-            nerveBarText.setText("0/0");
-            lifeBarText.setText("0/0");
-            travelBarText.setText("0/0s");
+            travelBar.setVisibility(View.INVISIBLE);
+            travelBarText.setVisibility(View.INVISIBLE);
         }
     }
 
     private void set(ProgressBar bar, int max, int progress, int secondary){
         if(bar != null) {
+            bar.setVisibility(View.VISIBLE);
             bar.setMax(max);
-            bar.setProgress(progress);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                bar.setProgress(progress, true);
+            else
+                bar.setProgress(progress);
+
             bar.setSecondaryProgress(secondary);
         }
+
+
+        // TODO: Some smarter way.
+        _lastMax = max;
+        _lastProgress = progress;
+    }
+
+    private int _lastMax = 0;
+    private int _lastProgress = 0;
+    private void set(ProgressBar bar, int max, int progress){
+        if(_lastProgress != _lastMax) {
+            bar.setVisibility(View.VISIBLE);
+            set(bar, max, progress, 0);
+        }else {
+            bar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void update() {
+        Log.d(TAG, "update");
+        if(getActivity()!=null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateView();
+                }
+            });
     }
 }

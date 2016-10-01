@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import net.jebster.TornNotifications.R;
+import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.model.SaveData;
 import net.jebster.TornNotifications.model.TornUser;
 
@@ -23,7 +24,6 @@ public class TornNotificationManager {
 
     private Context context;
     private SaveData _cp;
-    private TornUser _cu;
 
     public TornNotificationManager(Context context)
     {
@@ -32,7 +32,7 @@ public class TornNotificationManager {
 
     public void notificationsCheck(SaveData prefs, TornUser current, TornUser last)
     {
-        _cp = prefs; _cu = current;
+        _cp = prefs;
         if (prefs.EnergyNotification() && current.getEnergy().getCurrent() == current.getEnergy().getMaximum() && current.getEnergy().getCurrent() != last.getEnergy().getCurrent())
             EnergyNotification();
 
@@ -44,21 +44,28 @@ public class TornNotificationManager {
 
         if (prefs.TravelNotification() && current.getTravel().getTime_left() == 0 && current.getTravel().getTime_left() != last.getTravel().getTime_left())
             TravelNotification();
+
+        try {
+            if (prefs.EventsNotification() && current.getNotifications().getEvents() > last.getNotifications().getEvents() && current.getNotifications().getEvents() > 0)
+                EventNotification();
+        }catch (NullPointerException e){
+            // TODO: Something smarter than a try
+        }
     }
 
 
-    public NotificationCompat.Builder basicNotificationBuilder()
+    private NotificationCompat.Builder basicNotificationBuilder()
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentTitle("Torn")
                 .setSmallIcon(R.drawable.notification_template_icon_bg);
 
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
-                .addLine("Energy: " + _cu.getEnergy().getCurrent() + "/" + _cu.getEnergy().getMaximum())
-                .addLine("Happy: " + _cu.getHappy().getCurrent() + "/" + _cu.getHappy().getMaximum())
-                .addLine("Nerve: " + _cu.getNerve().getCurrent() + "/" + _cu.getNerve().getMaximum());
-        if (_cu.getTravel().getTime_left() > 0)
-            style.addLine("Travel time: " + _cu.getTravel().getTime_left()+ "s");
+                .addLine("Energy: " + Globals.User().getEnergy().getCurrent() + "/" + Globals.User().getEnergy().getMaximum())
+                .addLine("Happy: " + Globals.User().getHappy().getCurrent() + "/" + Globals.User().getHappy().getMaximum())
+                .addLine("Nerve: " + Globals.User().getNerve().getCurrent() + "/" + Globals.User().getNerve().getMaximum());
+        if (Globals.User().getTravel().getTime_left() > 0)
+            style.addLine("Travel time: " + Globals.User().getTravel().getTime_left()+ "s");
 
         PendingIntent actionPendingIntent = PendingIntent.getActivity(context, 1,
                 new Intent(Intent.ACTION_VIEW)
@@ -94,7 +101,7 @@ public class TornNotificationManager {
     public void EnergyNotification()
     {
         NotificationCompat.Builder builder = basicNotificationBuilder();
-        builder.setContentText("You have " + _cu.getEnergy().getCurrent() + "/" + _cu.getEnergy().getMaximum() + " Energy!");
+        builder.setContentText("You have " + Globals.User().getEnergy().getCurrent() + "/" + Globals.User().getEnergy().getMaximum() + " Energy!");
 
         finishNotification(builder, 0);
     }
@@ -102,7 +109,7 @@ public class TornNotificationManager {
     public void HappyNotification()
     {
         NotificationCompat.Builder builder = basicNotificationBuilder();
-        builder.setContentText("You have " + _cu.getHappy().getCurrent() + "/" + _cu.getHappy().getMaximum()+ " Happy!");
+        builder.setContentText("You have " + Globals.User().getHappy().getCurrent() + "/" + Globals.User().getHappy().getMaximum()+ " Happy!");
 
         finishNotification(builder, 1);
     }
@@ -110,7 +117,7 @@ public class TornNotificationManager {
     public void NerveNotification()
     {
         NotificationCompat.Builder builder = basicNotificationBuilder();
-        builder.setContentText("You have " + _cu.getNerve().getCurrent()+ "/" + _cu.getNerve().getMaximum() + " Nerve!");
+        builder.setContentText("You have " + Globals.User().getNerve().getCurrent()+ "/" + Globals.User().getNerve().getMaximum() + " Nerve!");
 
         finishNotification(builder, 2);
     }
@@ -118,9 +125,17 @@ public class TornNotificationManager {
     public void TravelNotification()
     {
         NotificationCompat.Builder builder = basicNotificationBuilder();
-        builder.setContentText("You landed in " + _cu.getTravel().getDestination());
+        builder.setContentText("You landed in " + Globals.User().getTravel().getDestination());
 
         finishNotification(builder, 3);
+    }
+
+    public void EventNotification()
+    {
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("You received a new event");
+
+        finishNotification(builder, 4);
     }
 
     public void showBasicNotification(String s) {

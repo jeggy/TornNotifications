@@ -25,13 +25,13 @@ import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.R;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.service.TornBackgroundService;
+import net.jebster.TornNotifications.tools.Observer;
 
-public class Application extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class ApplicationActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, Observer {
 
-    private static final String TAG = "Application";
+    private static final String TAG = "ApplicationActivity";
 
-    private TornInfoUpdateInterface tf;
     private NavigationView navigationView;
 
     @Override
@@ -52,10 +52,9 @@ public class Application extends AppCompatActivity
 
         setDisplay(R.id.nav_home);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(Globals.INTENT_FILTER_TORN_USER));
-
         Log.d(TAG, "StartBackgroundService");
+
+        Globals.User().addObserver(TAG, this);
 
         startService(new Intent(this, TornBackgroundService.class));
     }
@@ -79,11 +78,9 @@ public class Application extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return setDisplay(item.getItemId()); // R.id.action_settings
-//        return super.onOptionsItemSelected(item);
+        return setDisplay(item.getItemId());
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         setDisplay(item.getItemId());
@@ -114,11 +111,6 @@ public class Application extends AppCompatActivity
         if(fragment != null){
             ft.replace(R.id.content_navigation, fragment);
             ft.commit();
-            try {
-                tf = (TornInfoUpdateInterface) fragment;
-            }catch (ClassCastException e){
-                tf = null;
-            }
             return true;
         }
 
@@ -126,29 +118,21 @@ public class Application extends AppCompatActivity
         return false;
     }
 
-    public void updateViews(TornUser user){
-        View hView = navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.nav_username);
-        nav_user.setText(user.getUsername());
-
-        if(tf != null) tf.tornUser(user);
-    }
-
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        try {
-            TornUser user = (TornUser) intent.getSerializableExtra(Globals.EXTRA_TORN_USER);
-            updateViews(user);
-        }catch (ClassCastException e){
-            // Do nothing
-        }
-        }
-    };
+    @Override
+    public void update() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View hView = navigationView.getHeaderView(0);
+                TextView nav_user = (TextView)hView.findViewById(R.id.nav_username);
+                nav_user.setText(Globals.User().getUsername());
+            }
+        });
+
+    }
 }

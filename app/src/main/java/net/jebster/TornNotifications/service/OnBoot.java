@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import net.jebster.TornNotifications.tools.Preferences;
+import net.jebster.TornNotifications.tools.TornNotificationManager;
 
 /**
  * Created by jeggy on 9/17/16.
@@ -13,8 +14,9 @@ import net.jebster.TornNotifications.tools.Preferences;
 public class OnBoot extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("OnBoot", "Booted: Starting Torn Notifications Service");
-        if(Preferences.LoadData(context).StartOnBoot())
+        boolean start = Preferences.LoadData(context).StartOnBoot();
+        Log.d("OnBoot", "Booted: Starting Torn Notifications Service: "+ start);
+        if(start)
             context.startService(new Intent(context, TornBackgroundService.class));
     }
 }

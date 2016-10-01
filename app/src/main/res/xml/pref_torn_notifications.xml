@@ -20,7 +20,6 @@
         <SwitchPreference
             android:title="@string/StartOnBootTitle"
             android:defaultValue="true"
-            android:enabled="false"
             android:key="StartOnBoot"
             android:summary="@string/StartOnBootSummary" />
 
@@ -55,7 +54,6 @@
         <SwitchPreference
             android:title="@string/EventsNotificationTitle"
             android:defaultValue="false"
-            android:enabled="false"
             android:key="EventsNotification"
             android:summary="@string/EventsNotificationSummary" />
 

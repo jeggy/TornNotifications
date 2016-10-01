@@ -12,4 +12,18 @@ public class Globals {
 
     public static final String INTENT_FILTER_TORN_USER = PACKAGE_NAME + ".broadcast.TORN_USER";
 
+    private static TornUser user;
+
+    public static TornUser User(){
+        if(user == null){
+            user = new TornUser("Hasn't loaded anything yet");
+        }
+        return user;
+    }
+
+    public static TornUser User(TornUser user){
+        Globals.user = user;
+        return user;
+    }
+
 }

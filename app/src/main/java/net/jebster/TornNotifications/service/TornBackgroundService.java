@@ -24,11 +24,11 @@ public class TornBackgroundService extends Service{
 
     public boolean Running;
 
-    private TornUser _currentTornData;
+    //public static TornUser CurrentTornUser;
     private TornUser _lastTornData;
     private SaveData _preferences;
 
-    private net.jebster.TornNotifications.tools.TornNotificationManager TornNotificationManager;
+    private TornNotificationManager TornNotificationManager;
 
     @Override
     public void onCreate()
@@ -69,10 +69,10 @@ public class TornBackgroundService extends Service{
             public void run() {
                 try {
                     while (Running) {
-                        _currentTornData = TornApiService.getUserData(_preferences.getApiKey(), getRequiredFields());
-                        tornDataToActivity(_currentTornData);
-                        if (_currentTornData.getErrorText() != null && _currentTornData.getErrorText().length() > 0) {
-                            Log.d(TAG, _currentTornData.getErrorText());
+                        Globals.User(TornApiService.getUserData(_preferences.getApiKey(), getRequiredFields()));
+                        tornDataToActivity(Globals.User());
+                        if (Globals.User().getErrorText() != null && Globals.User().getErrorText().length() > 0) {
+                            Log.d(TAG, Globals.User().getErrorText());
                             // TODO: Possible errors: Torn Api Errors, No Internet Connection.
                             // Maybe show in a notification?
                             Thread.sleep(_preferences.getUpdateSecs()* 1000);
@@ -82,15 +82,16 @@ public class TornBackgroundService extends Service{
 
                         if (_lastTornData == null) {
                             Log.d(TAG, "First time loaded");
-                            _lastTornData = _currentTornData;
+                            _lastTornData = Globals.User();
                             Thread.sleep(_preferences.getUpdateSecs() * 1000);
                             continue;
                         }
 
-                        TornNotificationManager.notificationsCheck(_preferences, _currentTornData, _lastTornData);
+                        TornNotificationManager.notificationsCheck(_preferences, Globals.User(), _lastTornData);
 
-                        _lastTornData = _currentTornData;
+                        _lastTornData = Globals.User();
                         Thread.sleep(_preferences.getUpdateSecs() * 1000);
+
                     }
                 }
                 catch (InterruptedException e){
@@ -111,6 +112,9 @@ public class TornBackgroundService extends Service{
 
         if(_preferences.TravelNotification())
             list.add(TornApiService.TRAVEL);
+
+        if(_preferences.EventsNotification())
+            list.add(TornApiService.NOTIFICATIONS);
 
         return list.toArray(new String[]{});
     }

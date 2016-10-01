@@ -1,11 +1,15 @@
 package net.jebster.TornNotifications.model;
 
+import android.support.annotation.Nullable;
+
+import net.jebster.TornNotifications.tools.Observable;
+
 import java.io.Serializable;
 
 /**
  * Created by jeggy on 9/10/16.
  */
-public class TornUser implements Serializable {
+public class TornUser extends Observable implements Serializable {
 
     private static long serverTime;
 
@@ -19,11 +23,13 @@ public class TornUser implements Serializable {
     private Bar nerve;
     private Bar life;
     private Travel travel;
+    @Nullable
+    private Notifications notifications;
 
     // Error
     private String errorText;
 
-    public TornUser(int id, String username, String apiKey, Bar energy, Bar happy, Bar nerve, Bar life, Travel travel, long serverTime) {
+    public TornUser(int id, String username, String apiKey, Bar energy, Bar happy, Bar nerve, Bar life, Travel travel, @Nullable Notifications notifications, long serverTime) {
         this.id = id;
         this.username = username;
         this.apiKey = apiKey;
@@ -34,8 +40,10 @@ public class TornUser implements Serializable {
         this.life = life;
 
         this.travel = travel;
+        this.notifications = notifications;
 
-        this.serverTime = serverTime;
+        TornUser.serverTime = serverTime;
+        super.update();
     }
 
     public TornUser(String errorText) {
@@ -104,6 +112,15 @@ public class TornUser implements Serializable {
 
     public void setTravel(Travel travel) {
         this.travel = travel;
+    }
+
+    @Nullable
+    public Notifications getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(@Nullable Notifications notifications) {
+        this.notifications = notifications;
     }
 
     public String getErrorText() {
@@ -236,6 +253,52 @@ public class TornUser implements Serializable {
 
         public void setTime_left(long time_left) {
             this.time_left = time_left;
+        }
+    }
+
+    public static class Notifications{
+        private int messages;
+        private int events;
+        private int awards;
+        private int competition;
+
+        public Notifications(int messages, int events, int awards, int competition) {
+            this.messages = messages;
+            this.events = events;
+            this.awards = awards;
+            this.competition = competition;
+        }
+
+        public int getMessages() {
+            return messages;
+        }
+
+        public void setMessages(int messages) {
+            this.messages = messages;
+        }
+
+        public int getEvents() {
+            return events;
+        }
+
+        public void setEvents(int events) {
+            this.events = events;
+        }
+
+        public int getAwards() {
+            return awards;
+        }
+
+        public void setAwards(int awards) {
+            this.awards = awards;
+        }
+
+        public int getCompetition() {
+            return competition;
+        }
+
+        public void setCompetition(int competition) {
+            this.competition = competition;
         }
     }
 }
