@@ -20,7 +20,7 @@ import net.jebster.TornNotifications.service.TornBackgroundService;
  * Created by jeggy on 9/22/16.
  */
 
-public class SettingsFragment extends PreferenceFragment implements TornInfoUpdateInterface
+public class SettingsFragment extends PreferenceFragment
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -77,10 +77,5 @@ public class SettingsFragment extends PreferenceFragment implements TornInfoUpda
             Uri testa = Uri.parse(sharedPrefs.getString("NotificationSound", "default ringtone"));
             preference.setSummary(text + " : " + testa);
         }
-    }
-
-    @Override
-    public void tornUser(TornUser user) {
-
     }
 }
