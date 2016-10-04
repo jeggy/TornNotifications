@@ -34,6 +34,9 @@
     <string name="EventsNotificationTitle">Events Notification</string>
     <string name="EventsNotificationSummary">Receieve notification when your receive a event</string>
 
+    <string name="CooldownNotificationTitle">Cooldowns Notification</string>
+    <string name="CooldownNotificationSummary">Receieve notification your cooldown is finished</string>
+
 
     <!-- Notification Options Category -->
     <string name="SoundTitle">Play Sound</string>

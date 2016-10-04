@@ -34,16 +34,16 @@
             android:summary="@string/EnergyNotificationSummary" />
 
         <SwitchPreference
-            android:title="@string/NerveNotificationTitle"
-            android:defaultValue="true"
-            android:key="NerveNotification"
-            android:summary="@string/NerveNotificationSummary" />
-
-        <SwitchPreference
             android:title="@string/HappyNotificationTitle"
             android:defaultValue="false"
             android:key="HappyNotification"
             android:summary="@string/HappyNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/NerveNotificationTitle"
+            android:defaultValue="true"
+            android:key="NerveNotification"
+            android:summary="@string/NerveNotificationSummary" />
 
         <SwitchPreference
             android:title="@string/TravelNotificationTitle"
@@ -53,9 +53,15 @@
 
         <SwitchPreference
             android:title="@string/EventsNotificationTitle"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="EventsNotification"
             android:summary="@string/EventsNotificationSummary" />
+
+        <SwitchPreference
+            android:title="@string/CooldownNotificationTitle"
+            android:defaultValue="false"
+            android:key="CooldownNotification"
+            android:summary="@string/CooldownNotificationSummary" />
 
     </PreferenceCategory>
 

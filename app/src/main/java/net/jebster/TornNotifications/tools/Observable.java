@@ -11,6 +11,9 @@ public abstract class Observable {
 
     private static HashMap<String, Observer> observers = new HashMap<>();
 
+    public Observable(){
+        update();
+    }
 
     public void update(){
         for (Map.Entry<String, Observer> entry : observers.entrySet()) {

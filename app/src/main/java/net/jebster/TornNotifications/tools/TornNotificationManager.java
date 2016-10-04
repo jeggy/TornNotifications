@@ -45,12 +45,19 @@ public class TornNotificationManager {
         if (prefs.TravelNotification() && current.getTravel().getTime_left() == 0 && current.getTravel().getTime_left() != last.getTravel().getTime_left())
             TravelNotification();
 
-        try {
-            if (prefs.EventsNotification() && current.getNotifications().getEvents() > last.getNotifications().getEvents() && current.getNotifications().getEvents() > 0)
-                EventNotification();
-        }catch (NullPointerException e){
-            // TODO: Something smarter than a try
-        }
+        if (prefs.EventsNotification() && current.getNotifications().getEvents() > last.getNotifications().getEvents() && current.getNotifications().getEvents() > 0)
+            EventNotification();
+
+        // Drug
+        if(prefs.CoolDownNotification && current.cooldowns.getDrug() == 0 && current.cooldowns.getDrug() != last.cooldowns.getDrug())
+            DrugNotification();
+        // Medical
+        if(prefs.CoolDownNotification && current.cooldowns.getMedical() == 0 && current.cooldowns.getMedical() != last.cooldowns.getMedical())
+            MedicalNotification();
+        // Booster
+        if(prefs.CoolDownNotification && current.cooldowns.getBooster() == 0 && current.cooldowns.getBooster() != last.cooldowns.getBooster())
+            BoosterNotification();
+
     }
 
 
@@ -96,7 +103,14 @@ public class TornNotificationManager {
         notificationManager.notify(id, notification);
     }
 
-        /* -------------- Notification Types -------------- */
+    public void BasicNotification(String text, int id){
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText(text);
+
+        finishNotification(builder, id);
+    }
+
+    /* -------------- Notification Types -------------- */
 
     public void EnergyNotification()
     {
@@ -137,6 +151,22 @@ public class TornNotificationManager {
 
         finishNotification(builder, 4);
     }
+
+    public void DrugNotification(){
+        BasicNotification("Your drug cooldown is finished", 5);
+    }
+
+    public void MedicalNotification(){
+        BasicNotification("Your medical cooldown is finished", 6);
+    }
+
+    public void BoosterNotification(){
+        BasicNotification("Your booster cooldown is finished", 7);
+    }
+
+
+
+
 
     public void showBasicNotification(String s) {
         NotificationCompat.Builder mBuilder =

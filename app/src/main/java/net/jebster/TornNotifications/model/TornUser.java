@@ -12,24 +12,26 @@ import java.io.Serializable;
  */
 public class TornUser extends Observable implements Serializable {
 
-    private static long serverTime;
+    public int id;
+    public String username;
 
-    private int id;
-    private String username;
+    public String apiKey;
 
-    private String apiKey;
+    public Bar energy;
+    public Bar happy;
+    public Bar nerve;
+    public Bar life;
+    public Travel travel;
 
-    private Bar energy;
-    private Bar happy;
-    private Bar nerve;
-    private Bar life;
-    private Travel travel;
-    @Nullable
-    private Notifications notifications;
+    public Notifications notifications;
+    public Cooldown cooldowns;
 
     // Error
-    private String errorText;
+    public String errorText;
 
+
+
+    /*
     public TornUser(int id, String username, String apiKey, Bar energy, Bar happy, Bar nerve, Bar life, Travel travel, @Nullable Notifications notifications, long serverTime) {
         this.id = id;
         this.username = username;
@@ -50,6 +52,7 @@ public class TornUser extends Observable implements Serializable {
     public TornUser(String errorText) {
         this.errorText = errorText;
     }
+    */
 
     public int getId() {
         return id;
@@ -128,16 +131,9 @@ public class TornUser extends Observable implements Serializable {
         return errorText;
     }
 
-    public void setErrorText(String errorText) {
+    public TornUser setErrorText(String errorText) {
         this.errorText = errorText;
-    }
-
-    public long getServerTime() {
-        return serverTime;
-    }
-
-    public void setServerTime(long serverTime) {
-        TornUser.serverTime = serverTime;
+        return this;
     }
 
     public static class Bar{
@@ -156,6 +152,10 @@ public class TornUser extends Observable implements Serializable {
             this.interval = interval;
             this.ticktime = ticktime;
             this.fulltime = fulltime;
+        }
+
+        public Bar(){
+
         }
 
         public int getCurrent() {
@@ -220,6 +220,8 @@ public class TornUser extends Observable implements Serializable {
             this.time_left = time_left;
         }
 
+        public Travel(){}
+
         public String getTimeTravelLeft(){
             return TimeUtils.getStringTime(this.time_left);
         }
@@ -274,6 +276,8 @@ public class TornUser extends Observable implements Serializable {
             this.competition = competition;
         }
 
+        public Notifications(){}
+
         public int getMessages() {
             return messages;
         }
@@ -304,6 +308,44 @@ public class TornUser extends Observable implements Serializable {
 
         public void setCompetition(int competition) {
             this.competition = competition;
+        }
+    }
+
+    public static class Cooldown{
+        private int drug;
+        private int medical;
+        private int booster;
+
+        public Cooldown(int drug, int medical, int booster) {
+            this.drug = drug;
+            this.medical = medical;
+            this.booster = booster;
+        }
+
+        public Cooldown(){}
+
+        public int getDrug() {
+            return drug;
+        }
+
+        public void setDrug(int drug) {
+            this.drug = drug;
+        }
+
+        public int getMedical() {
+            return medical;
+        }
+
+        public void setMedical(int medical) {
+            this.medical = medical;
+        }
+
+        public int getBooster() {
+            return booster;
+        }
+
+        public void setBooster(int booster) {
+            this.booster = booster;
         }
     }
 }

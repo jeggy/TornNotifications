@@ -32,7 +32,7 @@ public class SettingsFragment extends PreferenceFragment
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 UpdatePreference(findPreference(key), key);
-                getActivity().startService(new Intent(getActivity(), TornBackgroundService.class));
+                if(isAdded()) getActivity().startService(new Intent(getActivity(), TornBackgroundService.class));
             }
         });
 
@@ -61,7 +61,7 @@ public class SettingsFragment extends PreferenceFragment
 
     private void UpdatePreference(Preference preference, String key)
     {
-        if (preference == null) return;
+        if (preference == null || key == null || !isAdded()) return;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
 
         String text = getResources().getString(getResources().getIdentifier(key+"Summary", "string" , Globals.PACKAGE_NAME));

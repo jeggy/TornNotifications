@@ -10,7 +10,6 @@ import android.util.Log;
 import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.tools.Preferences;
 import net.jebster.TornNotifications.model.SaveData;
-import net.jebster.TornNotifications.tools.TornApiService;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.tools.TornNotificationManager;
 
@@ -105,7 +104,7 @@ public class TornBackgroundService extends Service{
     private String[] getRequiredFields() {
 
         ArrayList<String> list = new ArrayList<>();
-        list.add(TornApiService.BASIC);
+        list.add(TornApiService.BASIC); // TODO: Maybe not this one?
 
         if(_preferences.HappyNotification() || _preferences.EnergyNotification() || _preferences.NerveNotification())
             list.add(TornApiService.BARS);
@@ -116,9 +115,13 @@ public class TornBackgroundService extends Service{
         if(_preferences.EventsNotification())
             list.add(TornApiService.NOTIFICATIONS);
 
+        if(_preferences.CoolDownNotification)
+            list.add(TornApiService.COOLDOWNS);
+
         return list.toArray(new String[]{});
     }
 
+    // Broadcast user to activity via intent
     private void tornDataToActivity(TornUser data) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(
                 new Intent(Globals.INTENT_FILTER_TORN_USER)

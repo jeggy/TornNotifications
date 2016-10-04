@@ -7,125 +7,111 @@ import android.net.Uri;
  */
 public class SaveData {
 
-    private String apiKey;
-    private int updateSecs;
-    private boolean startOnBoot;
+    public String ApiKey;
+    public int UpdateSecs;
+    public boolean StartOnBoot;
 
-    private boolean energyNotification;
-    private boolean nerveNotification;
-    private boolean happyNotification;
-    private boolean travelNotification;
-    private boolean eventsNotification;
+    public boolean EnergyNotification;
+    public boolean HappyNotification;
+    public boolean NerveNotification;
+    public boolean TravelNotification;
+    public boolean EventsNotification;
+    public boolean CoolDownNotification;
 
-    private boolean sound;
-    private String _sound;
-    private boolean vibrate;
-    private boolean led;
-
-    public SaveData(String apiKey, int updateSecs, boolean startOnBoot, boolean energyNotification, boolean nerveNotification, boolean happyNotification, boolean travelNotification, boolean eventsNotification, boolean sound, String _sound, boolean vibrate, boolean led) {
-        this.apiKey = apiKey;
-        this.updateSecs = updateSecs;
-        this.startOnBoot = startOnBoot;
-        this.energyNotification = energyNotification;
-        this.nerveNotification = nerveNotification;
-        this.happyNotification = happyNotification;
-        this.travelNotification = travelNotification;
-        this.eventsNotification = eventsNotification;
-        this.sound = sound;
-        this._sound = _sound;
-        this.vibrate = vibrate;
-        this.led = led;
-    }
+    public boolean Sound;
+    public String _sound;
+    public boolean Vibrate;
+    public boolean Led;
 
     public Uri getSound(){
         return Uri.parse(_sound);
     }
 
     public String getApiKey() {
-        return apiKey;
+        return ApiKey;
     }
 
     public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+        this.ApiKey = apiKey;
     }
 
     public int getUpdateSecs() {
-        return updateSecs;
+        return UpdateSecs;
     }
 
     public void setUpdateSecs(int updateSecs) {
-        this.updateSecs = updateSecs;
+        this.UpdateSecs = updateSecs;
     }
 
     public boolean StartOnBoot() {
-        return startOnBoot;
+        return StartOnBoot;
     }
 
     public void setStartOnBoot(boolean startOnBoot) {
-        this.startOnBoot = startOnBoot;
+        this.StartOnBoot = startOnBoot;
     }
 
     public boolean EnergyNotification() {
-        return energyNotification;
+        return EnergyNotification;
     }
 
     public void setEnergyNotification(boolean energyNotification) {
-        this.energyNotification = energyNotification;
+        this.EnergyNotification = energyNotification;
     }
 
     public boolean NerveNotification() {
-        return nerveNotification;
+        return NerveNotification;
     }
 
     public void setNerveNotification(boolean nerveNotification) {
-        this.nerveNotification = nerveNotification;
+        this.NerveNotification = nerveNotification;
     }
 
     public boolean HappyNotification() {
-        return happyNotification;
+        return HappyNotification;
     }
 
     public void setHappyNotification(boolean happyNotification) {
-        this.happyNotification = happyNotification;
+        this.HappyNotification = happyNotification;
     }
 
     public boolean TravelNotification() {
-        return travelNotification;
+        return TravelNotification;
     }
 
     public void setTravelNotification(boolean travelNotification) {
-        this.travelNotification = travelNotification;
+        this.TravelNotification = travelNotification;
     }
 
     public boolean EventsNotification() {
-        return eventsNotification;
+        return EventsNotification;
     }
 
     public void setEventsNotification(boolean eventsNotification) {
-        this.eventsNotification = eventsNotification;
+        this.EventsNotification = eventsNotification;
     }
 
     public boolean Sound() {
-        return sound;
+        return Sound;
     }
 
     public void setSound(boolean sound) {
-        this.sound = sound;
+        this.Sound = sound;
     }
 
     public boolean Led() {
-        return led;
+        return Led;
     }
 
     public void setLed(boolean led) {
-        this.led = led;
+        this.Led = led;
     }
 
     public boolean Vibrate() {
-        return vibrate;
+        return Vibrate;
     }
 
     public void setVibrate(boolean vibrate) {
-        this.vibrate = vibrate;
+        this.Vibrate = vibrate;
     }
 }

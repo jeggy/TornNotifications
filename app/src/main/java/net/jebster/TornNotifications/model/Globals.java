@@ -15,9 +15,8 @@ public class Globals {
     private static TornUser user;
 
     public static TornUser User(){
-        if(user == null){
-            user = new TornUser("Hasn't loaded anything yet");
-        }
+        if(user == null)
+            user = new TornUser().setErrorText("Hasn't loaded anything yet");
         return user;
     }
 

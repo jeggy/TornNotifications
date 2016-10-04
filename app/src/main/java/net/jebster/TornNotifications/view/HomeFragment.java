@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment implements Observer {
             set(travelBar,
                     ((int) user.getTravel().getTravelTime()),
                     ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())), false);
-            travelBarText.setText(user.getTravel().getTimeTravelLeft()); //user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
+            travelBarText.setText("In "+user.travel.getDestination()+": "+user.getTravel().getTimeTravelLeft()); //user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
         }else{
             travelBar.setVisibility(View.INVISIBLE);
             travelBarText.setVisibility(View.INVISIBLE);
