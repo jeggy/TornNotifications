@@ -118,7 +118,6 @@ public class TornUser extends Observable implements Serializable {
         this.travel = travel;
     }
 
-    @Nullable
     public Notifications getNotifications() {
         return notifications;
     }

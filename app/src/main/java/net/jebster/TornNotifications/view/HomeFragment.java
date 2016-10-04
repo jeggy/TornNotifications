@@ -15,6 +15,9 @@ import net.jebster.TornNotifications.R;
 import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.tools.Observer;
+import net.jebster.TornNotifications.tools.TimeUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by jeggy on 9/24/16.
@@ -38,6 +41,7 @@ public class HomeFragment extends Fragment implements Observer {
     private TextView nerveBarText;
     private TextView lifeBarText;
     private TextView travelBarText;
+    private TextView cooldownsText;
 
     private TornUser user;
 
@@ -63,6 +67,8 @@ public class HomeFragment extends Fragment implements Observer {
             nerveBarText = (TextView) view.findViewById(R.id.nerve_bar_text);
             lifeBarText = (TextView) view.findViewById(R.id.life_bar_text);
             travelBarText = (TextView) view.findViewById(R.id.travel_bar_text);
+
+            cooldownsText = (TextView) view.findViewById(R.id.cooldowns_text);
         }
         Globals.User().addObserver(TAG, this);
         updateView();
@@ -83,6 +89,7 @@ public class HomeFragment extends Fragment implements Observer {
             show(happyBar, happyBarTime, happyBarText, user.getHappy());
             show(nerveBar, nerveBarTime, nerveBarText, user.getNerve());
             show(lifeBar, lifeBarTime, lifeBarText, user.getLife());
+            showCooldowns();
             showTravel();
         } else {
             reset();
@@ -102,11 +109,13 @@ public class HomeFragment extends Fragment implements Observer {
         set(lifeBar, 0, 0, true);
         set(travelBar, 0, 0, true);
 
+
         energyBarText.setText("0/0");
         happyBarText.setText("0/0");
         nerveBarText.setText("0/0");
         lifeBarText.setText("0/0");
         travelBarText.setText("0/0s");
+        cooldownsText.setText("");
     }
 
 
@@ -123,6 +132,31 @@ public class HomeFragment extends Fragment implements Observer {
             travelBar.setVisibility(View.INVISIBLE);
             travelBarText.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void showCooldowns(){
+        String text = "";
+
+        ArrayList<String> coolDowns = new ArrayList<>();
+
+        if(user.cooldowns.getDrug() > 0)
+            coolDowns.add("drugs["+ TimeUtils.getStringTime(user.cooldowns.getDrug())+"]");
+        if(user.cooldowns.getMedical() > 0)
+            coolDowns.add("medical["+TimeUtils.getStringTime(user.cooldowns.getMedical())+"]");
+        if(user.cooldowns.getBooster() > 0)
+            coolDowns.add("boosters["+TimeUtils.getStringTime(user.cooldowns.getBooster())+"]");
+
+        if(coolDowns.size() > 0){
+            text += "Cooldowns: ";
+            for(int i = 0; i < coolDowns.size(); i++){
+                if(i>0){
+                    text += i == coolDowns.size()-1 ? " and " : ", ";
+                }
+                text += coolDowns.get(i);
+            }
+        }
+
+        cooldownsText.setText(text);
     }
 
     private void set(ProgressBar bar, int max, int progress, int secondary){

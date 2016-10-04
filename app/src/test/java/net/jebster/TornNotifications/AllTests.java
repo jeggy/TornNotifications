@@ -1,9 +1,6 @@
 package net.jebster.TornNotifications;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import net.jebster.TornNotifications.tools.TornNotificationManager;
+import net.jebster.TornNotifications.notifications.NotificationSuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -16,8 +13,9 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses(
         {
-                TornNotificationManagerTest.class,
+                NotificationSuite.class,
                 TimeUtilsTest.class
         }
 )
+
 public class AllTests {}

@@ -103,14 +103,7 @@ public class TornNotificationManager {
         notificationManager.notify(id, notification);
     }
 
-    public void BasicNotification(String text, int id){
-        NotificationCompat.Builder builder = basicNotificationBuilder();
-        builder.setContentText(text);
-
-        finishNotification(builder, id);
-    }
-
-    /* -------------- Notification Types -------------- */
+        /* -------------- Notification Types -------------- */
 
     public void EnergyNotification()
     {
@@ -153,19 +146,30 @@ public class TornNotificationManager {
     }
 
     public void DrugNotification(){
-        BasicNotification("Your drug cooldown is finished", 5);
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("Your drug cooldown is finished");
+
+        finishNotification(builder, 5);
     }
 
     public void MedicalNotification(){
-        BasicNotification("Your medical cooldown is finished", 6);
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText("Your drug cooldown is finished");
+
+        finishNotification(builder, 6);
     }
 
     public void BoosterNotification(){
-        BasicNotification("Your booster cooldown is finished", 7);
+        BasicNotification("Your drug cooldown is finished", 7);
     }
 
 
+    public void BasicNotification(String text, int id){
+        NotificationCompat.Builder builder = basicNotificationBuilder();
+        builder.setContentText(text);
 
+        finishNotification(builder, id);
+    }
 
 
     public void showBasicNotification(String s) {
