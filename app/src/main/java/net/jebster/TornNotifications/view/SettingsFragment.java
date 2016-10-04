@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 
 import net.jebster.TornNotifications.R;
+import net.jebster.TornNotifications.model.Globals;
 import net.jebster.TornNotifications.model.TornUser;
 import net.jebster.TornNotifications.service.TornBackgroundService;
 
@@ -63,7 +64,7 @@ public class SettingsFragment extends PreferenceFragment implements TornInfoUpda
         if (preference == null) return;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
 
-        String text = getResources().getString(getResources().getIdentifier(key+"Summary", "string" , getActivity().getPackageName()));
+        String text = getResources().getString(getResources().getIdentifier(key+"Summary", "string" , Globals.PACKAGE_NAME));
         if (preference instanceof EditTextPreference)
         {
             EditTextPreference editTextPref = (EditTextPreference)preference;

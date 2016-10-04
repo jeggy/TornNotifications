@@ -3,6 +3,7 @@ package net.jebster.TornNotifications.model;
 import android.support.annotation.Nullable;
 
 import net.jebster.TornNotifications.tools.Observable;
+import net.jebster.TornNotifications.tools.TimeUtils;
 
 import java.io.Serializable;
 
@@ -217,6 +218,10 @@ public class TornUser extends Observable implements Serializable {
             this.timestamp = timestamp;
             this.departed = departed;
             this.time_left = time_left;
+        }
+
+        public String getTimeTravelLeft(){
+            return TimeUtils.getStringTime(this.time_left);
         }
 
         public long getTravelTime(){

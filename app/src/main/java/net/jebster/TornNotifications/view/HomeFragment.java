@@ -91,16 +91,16 @@ public class HomeFragment extends Fragment implements Observer {
 
     private void show(ProgressBar pb, ProgressBar pbt, TextView tv, TornUser.Bar bar){
         set(pb, bar.getMaximum(), bar.getCurrent(), bar.getCurrent()+bar.getIncrement());
-        set(pbt, bar.getInterval(), bar.getInterval()-bar.getTicktime());
+        set(pbt, bar.getInterval(), bar.getInterval()-bar.getTicktime(), true);
         tv.setText(bar.getCurrent() + "/" + bar.getMaximum());
     }
 
     private void reset() {
-        set(energyBar, 0, 0);
-        set(happyBar, 0, 0);
-        set(nerveBar, 0, 0);
-        set(lifeBar, 0, 0);
-        set(travelBar, 0, 0);
+        set(energyBar, 0, 0, true);
+        set(happyBar, 0, 0, true);
+        set(nerveBar, 0, 0, true);
+        set(lifeBar, 0, 0, true);
+        set(travelBar, 0, 0, true);
 
         energyBarText.setText("0/0");
         happyBarText.setText("0/0");
@@ -117,8 +117,8 @@ public class HomeFragment extends Fragment implements Observer {
             travelBarText.setVisibility(View.VISIBLE);
             set(travelBar,
                     ((int) user.getTravel().getTravelTime()),
-                    ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())));
-            travelBarText.setText(user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
+                    ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())), false);
+            travelBarText.setText(user.getTravel().getTimeTravelLeft()); //user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
         }else{
             travelBar.setVisibility(View.INVISIBLE);
             travelBarText.setVisibility(View.INVISIBLE);
@@ -145,8 +145,8 @@ public class HomeFragment extends Fragment implements Observer {
 
     private int _lastMax = 0;
     private int _lastProgress = 0;
-    private void set(ProgressBar bar, int max, int progress){
-        if(_lastProgress != _lastMax) {
+    private void set(ProgressBar bar, int max, int progress, boolean check){
+        if(_lastProgress != _lastMax || !check) {
             bar.setVisibility(View.VISIBLE);
             set(bar, max, progress, 0);
         }else {
