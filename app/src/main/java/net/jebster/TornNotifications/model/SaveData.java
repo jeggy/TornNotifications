@@ -7,21 +7,24 @@ import android.net.Uri;
  */
 public class SaveData {
 
-    public String ApiKey;
-    public int UpdateSecs;
-    public boolean StartOnBoot;
+    private String ApiKey;
+    private int UpdateSecs;
+    private boolean StartOnBoot;
 
-    public boolean EnergyNotification;
-    public boolean HappyNotification;
-    public boolean NerveNotification;
-    public boolean TravelNotification;
-    public boolean EventsNotification;
-    public boolean CoolDownNotification;
+    private boolean EnergyNotification;
+    private boolean HappyNotification;
+    private boolean NerveNotification;
+    private boolean TravelNotification;
+    private boolean EventsNotification;
+    private boolean CoolDownNotification;
 
-    public boolean Sound;
-    public String _sound;
-    public boolean Vibrate;
-    public boolean Led;
+    private boolean Sound;
+    private String _sound;
+    private boolean Vibrate;
+    private boolean Led;
+
+    // TODO: Look at these Getters/Setters and fix names n' stuff around the project.
+    public void setSoundUri(String sound){this._sound = sound;}
 
     public Uri getSound(){
         return Uri.parse(_sound);
@@ -114,4 +117,10 @@ public class SaveData {
     public void setVibrate(boolean vibrate) {
         this.Vibrate = vibrate;
     }
+
+    public boolean CooldownNotification(){return CoolDownNotification;}
+
+    public void setCooldownNotification(boolean value){this.CoolDownNotification = value;}
+
+
 }

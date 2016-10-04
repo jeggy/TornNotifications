@@ -35,13 +35,18 @@ public class CooldownsTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    /****************************************/
+    /*                                      */
+    /*              Drug Tests              */
+    /*                                      */
+    /****************************************/
 
     @Test
     public void notificationCheck_CooldownDrugFinished_CooldownsNotificationCalled(){
         // Arrange
-        when(sampleSaveData.EventsNotification()).thenReturn(true);
-        when(sampleLastUser.getNotifications()).thenReturn(new TornUser.Notifications(0,1,0,0));
-        when(sampleNowUser.getNotifications()).thenReturn(new TornUser.Notifications(0,3,0,0));
+        when(sampleSaveData.CooldownNotification()).thenReturn(true);
+        when(sampleLastUser.getCooldowns()).thenReturn(new TornUser.Cooldown(11,0,0));
+        when(sampleNowUser.getCooldowns()).thenReturn(new TornUser.Cooldown(0,0,0));
 
         nothing(tnm);
         doCallRealMethod().when(tnm).notificationsCheck(any(SaveData.class), any(TornUser.class), any(TornUser.class));
@@ -50,7 +55,7 @@ public class CooldownsTest {
         tnm.notificationsCheck(sampleSaveData, sampleNowUser, sampleLastUser);
 
         // Assert
-        verify(tnm, times(1)).EventNotification();
+        verify(tnm, times(1)).DrugNotification();
     }
 
 }

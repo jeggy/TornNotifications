@@ -37,14 +37,14 @@ public class TornApiService {
         JsonObject obj = apiRequest(key, fields); //"basic,bars,travel");
 
         TornUser tu = new TornUser();
-        tu.apiKey = key;
+        tu.setApiKey(key);
 
         if(obj != null && obj.has("error"))
-            tu.errorText = get(obj, "error", "error").getAsString();
+            tu.setErrorText(get(obj, "error", "error").getAsString());
         else if(obj != null)
             tu = makeTornObject(obj, tu);
         else
-            tu.errorText = "Some error";
+            tu.setErrorText("Some error");
 
 
         return tu;
@@ -52,17 +52,17 @@ public class TornApiService {
 
     private static TornUser makeTornObject(JsonObject obj, TornUser user){
 
-        user.id = get(obj,"player_id").getAsInt();
-        user.username = get(obj, "name").getAsString();
+        user.setId(get(obj,"player_id").getAsInt());
+        user.setUsername(get(obj, "name").getAsString());
 
-        user.energy = bar(obj, "energy");
-        user.happy = bar(obj, "happy");
-        user.nerve = bar(obj, "nerve");
-        user.life = bar(obj, "life");
+        user.setEnergy(bar(obj, "energy"));
+        user.setHappy(bar(obj, "happy"));
+        user.setNerve(bar(obj, "nerve"));
+        user.setLife(bar(obj, "life"));
 
-        user.travel = travel(obj);
-        user.notifications = notifications(obj);
-        user.cooldowns = cooldowns(obj);
+        user.setTravel(travel(obj));
+        user.setNotifications(notifications(obj));
+        user.setCooldowns(cooldowns(obj));
 
 
         return user;

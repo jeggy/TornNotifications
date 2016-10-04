@@ -49,13 +49,13 @@ public class TornNotificationManager {
             EventNotification();
 
         // Drug
-        if(prefs.CoolDownNotification && current.cooldowns.getDrug() == 0 && current.cooldowns.getDrug() != last.cooldowns.getDrug())
+        if(prefs.CooldownNotification() && current.getCooldowns().getDrug() == 0 && current.getCooldowns().getDrug() != last.getCooldowns().getDrug())
             DrugNotification();
         // Medical
-        if(prefs.CoolDownNotification && current.cooldowns.getMedical() == 0 && current.cooldowns.getMedical() != last.cooldowns.getMedical())
+        if(prefs.CooldownNotification() && current.getCooldowns().getMedical() == 0 && current.getCooldowns().getMedical() != last.getCooldowns().getMedical())
             MedicalNotification();
         // Booster
-        if(prefs.CoolDownNotification && current.cooldowns.getBooster() == 0 && current.cooldowns.getBooster() != last.cooldowns.getBooster())
+        if(prefs.CooldownNotification() && current.getCooldowns().getBooster() == 0 && current.getCooldowns().getBooster() != last.getCooldowns().getBooster())
             BoosterNotification();
 
     }

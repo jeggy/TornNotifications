@@ -15,21 +15,21 @@ public class Preferences {
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SaveData sd = new SaveData();
-        sd.ApiKey = prefs.getString("ApiKey", "");
-        sd.UpdateSecs = Integer.parseInt(prefs.getString("UpdateInterval", "-1")); // TODO: make proper check on this.
-        sd.StartOnBoot = prefs.getBoolean("StartOnBoot", false);
+        sd.setApiKey(prefs.getString("ApiKey", ""));
+        sd.setUpdateSecs(Integer.parseInt(prefs.getString("UpdateInterval", "-1"))); // TODO: make proper check on this.
+        sd.setStartOnBoot(prefs.getBoolean("StartOnBoot", false));
 
-        sd.EnergyNotification = prefs.getBoolean("EnergyNotification", false);
-        sd.HappyNotification = prefs.getBoolean("NerveNotification", false);
-        sd.NerveNotification = prefs.getBoolean("HappyNotification", false);
-        sd.TravelNotification = prefs.getBoolean("TravelNotification", false);
-        sd.EventsNotification = prefs.getBoolean("EventsNotification", false);
-        sd.CoolDownNotification = prefs.getBoolean("CooldownNotification", false);
+        sd.setEnergyNotification(prefs.getBoolean("EnergyNotification", false));
+        sd.setHappyNotification(prefs.getBoolean("NerveNotification", false));
+        sd.setNerveNotification(prefs.getBoolean("HappyNotification", false));
+        sd.setTravelNotification(prefs.getBoolean("TravelNotification", false));
+        sd.setEventsNotification(prefs.getBoolean("EventsNotification", false));
+        sd.setCooldownNotification(prefs.getBoolean("CooldownNotification", false));
 
-        sd.Sound = prefs.getBoolean("Sound", false);
-        sd._sound = prefs.getString("NotificationSound", "default ringtone");
-        sd.Vibrate = prefs.getBoolean("Vibrate", false);
-        sd.Led = prefs.getBoolean("Led", false);
+        sd.setSound(prefs.getBoolean("Sound", false));
+        sd.setSoundUri(prefs.getString("NotificationSound", "default ringtone"));
+        sd.setVibrate(prefs.getBoolean("Vibrate", false));
+        sd.setLed(prefs.getBoolean("Led", false));
 
         return sd;
     }

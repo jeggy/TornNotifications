@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment implements Observer {
             set(travelBar,
                     ((int) user.getTravel().getTravelTime()),
                     ((int) (user.getTravel().getTravelTime() - user.getTravel().getTime_left())), false);
-            travelBarText.setText("In "+user.travel.getDestination()+": "+user.getTravel().getTimeTravelLeft()); //user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
+            travelBarText.setText(user.getTravel().getDestination()+": "+user.getTravel().getTimeTravelLeft()); //user.getTravel().getDestination() + ": " + user.getTravel().getTime_left() + "/" + user.getTravel().getTravelTime() +"s");
         }else{
             travelBar.setVisibility(View.INVISIBLE);
             travelBarText.setVisibility(View.INVISIBLE);
@@ -139,12 +139,12 @@ public class HomeFragment extends Fragment implements Observer {
 
         ArrayList<String> coolDowns = new ArrayList<>();
 
-        if(user.cooldowns.getDrug() > 0)
-            coolDowns.add("drugs["+ TimeUtils.getStringTime(user.cooldowns.getDrug())+"]");
-        if(user.cooldowns.getMedical() > 0)
-            coolDowns.add("medical["+TimeUtils.getStringTime(user.cooldowns.getMedical())+"]");
-        if(user.cooldowns.getBooster() > 0)
-            coolDowns.add("boosters["+TimeUtils.getStringTime(user.cooldowns.getBooster())+"]");
+        if(user.getCooldowns().getDrug() > 0)
+            coolDowns.add("drugs["+ TimeUtils.getStringTime(user.getCooldowns().getDrug())+"]");
+        if(user.getCooldowns().getMedical() > 0)
+            coolDowns.add("medical["+TimeUtils.getStringTime(user.getCooldowns().getMedical())+"]");
+        if(user.getCooldowns().getBooster() > 0)
+            coolDowns.add("boosters["+TimeUtils.getStringTime(user.getCooldowns().getBooster())+"]");
 
         if(coolDowns.size() > 0){
             text += "Cooldowns: ";

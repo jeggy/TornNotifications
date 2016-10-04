@@ -12,22 +12,22 @@ import java.io.Serializable;
  */
 public class TornUser extends Observable implements Serializable {
 
-    public int id;
-    public String username;
+    private int id;
+    private String username;
 
-    public String apiKey;
+    private String apiKey;
 
-    public Bar energy;
-    public Bar happy;
-    public Bar nerve;
-    public Bar life;
-    public Travel travel;
+    private Bar energy;
+    private Bar happy;
+    private Bar nerve;
+    private Bar life;
+    private Travel travel;
 
-    public Notifications notifications;
-    public Cooldown cooldowns;
+    private Notifications notifications;
+    private Cooldown cooldowns;
 
     // Error
-    public String errorText;
+    private String errorText;
 
 
 
@@ -122,8 +122,16 @@ public class TornUser extends Observable implements Serializable {
         return notifications;
     }
 
-    public void setNotifications(@Nullable Notifications notifications) {
+    public void setNotifications(Notifications notifications) {
         this.notifications = notifications;
+    }
+
+    public Cooldown getCooldowns() {
+        return cooldowns;
+    }
+
+    public void setCooldowns(Cooldown cooldowns) {
+        this.cooldowns = cooldowns;
     }
 
     public String getErrorText() {

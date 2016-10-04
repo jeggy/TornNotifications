@@ -115,7 +115,7 @@ public class TornBackgroundService extends Service{
         if(_preferences.EventsNotification())
             list.add(TornApiService.NOTIFICATIONS);
 
-        if(_preferences.CoolDownNotification)
+        if(_preferences.CooldownNotification())
             list.add(TornApiService.COOLDOWNS);
 
         return list.toArray(new String[]{});
