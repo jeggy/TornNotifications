@@ -11,19 +11,20 @@ import net.jebster.TornNotifications.model.SaveData;
  */
 public class Preferences {
 
+    // TODO: Unit tests
     public static SaveData LoadData(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SaveData sd = new SaveData();
         sd.setApiKey(prefs.getString("ApiKey", ""));
-        sd.setUpdateSecs(Integer.parseInt(prefs.getString("UpdateInterval", "-1"))); // TODO: make proper check on this.
+        sd.setUpdateSecs(Integer.parseInt(prefs.getString("UpdateInterval", "10"))); // TODO: make proper check on this.
         sd.setStartOnBoot(prefs.getBoolean("StartOnBoot", false));
 
-        sd.setEnergyNotification(prefs.getBoolean("EnergyNotification", false));
+        sd.setEnergyNotification(prefs.getBoolean("EnergyNotification", true));
         sd.setHappyNotification(prefs.getBoolean("NerveNotification", false));
-        sd.setNerveNotification(prefs.getBoolean("HappyNotification", false));
-        sd.setTravelNotification(prefs.getBoolean("TravelNotification", false));
-        sd.setEventsNotification(prefs.getBoolean("EventsNotification", false));
+        sd.setNerveNotification(prefs.getBoolean("HappyNotification", true));
+        sd.setTravelNotification(prefs.getBoolean("TravelNotification", true));
+        sd.setEventsNotification(prefs.getBoolean("EventsNotification", true));
         sd.setCooldownNotification(prefs.getBoolean("CooldownNotification", false));
 
         sd.setSound(prefs.getBoolean("Sound", false));

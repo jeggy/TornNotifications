@@ -8,7 +8,7 @@ import android.net.Uri;
 public class SaveData {
 
     private String ApiKey;
-    private int UpdateSecs;
+    private int UpdateSecs = 10;
     private boolean StartOnBoot;
 
     private boolean EnergyNotification;

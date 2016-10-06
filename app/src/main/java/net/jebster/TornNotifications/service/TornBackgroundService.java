@@ -74,7 +74,7 @@ public class TornBackgroundService extends Service{
                             Log.d(TAG, Globals.User().getErrorText());
                             // TODO: Possible errors: Torn Api Errors, No Internet Connection.
                             // Maybe show in a notification?
-                            Thread.sleep(_preferences.getUpdateSecs()* 1000);
+                            Thread.sleep(_preferences.getUpdateSecs() * 1000);
                             continue;
                         }
 
